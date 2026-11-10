@@ -1,5 +1,4 @@
-<!doctype html><title>세종 집값 한눈에</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>세종 집값 보고서 2차</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=Black+Han+Sans&display=swap">
 <style>
 /* 레이아웃: 760px 한 열, 그림이 주인공 · 글은 그림 밑 한두 줄 */
@@ -70,203 +69,89 @@ td.num{text-align:right;white-space:nowrap}
 .tw td:first-child{min-width:4.5em}
 [data-l]{display:none}[data-l].on{display:block}
 </style>
-<div class="wrap">
+<style>
+.lang button[aria-pressed="true"]{color:var(--bg)}
+.todo{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--s3);border-radius:4px;padding:12px 16px}
+.todo ol{margin:6px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+.sm{font-size:13px;color:var(--sub)}
+.nw{white-space:nowrap}
+tr.hi td{background:var(--accent-bg)}
+table.dt td,table.dt th{padding:7px 6px}
+table.tlt td{padding:7px 6px}
+@media (max-width:520px){table{font-size:14px}.big b{font-size:19px}}
+</style></head><body><div class="wrap">
 <div class="lang"><button id="bko" aria-pressed="true">한국어</button><button id="bzh" aria-pressed="false">中文</button></div>
-
-<div data-l="ko" class="on">
-<header><h1>세종 집값 한눈에</h1>
-<div class="meta">국토부 실거래 3만 7,805건 직접 분석 · 2026.11</div></header>
-<div class="verdict">① 세종은 <b>오래 갖고 있으면 오르는 곳이 아님</b> — 2021년 최고가보다 아직 21% 쌈<br>
-② 집값을 가르는 1위 <b>새집이냐</b> · 2위 <b>중심가에 가깝냐</b><br>
-③ 산울동이 비싼 건 대부분 <b>새집이라서</b> → 4~5년 지나면 그 웃돈이 빠질 가능성</div>
-<div class="note" style="margin:12px 0"><b>먼저 알아둘 말</b><br>
-· <b>실거래</b> = 나라에 신고된, 실제로 팔린 값<br>
-· <b>분양가</b> = 새 아파트를 처음 살 때 낸 값<br>
-· <b>84㎡</b> = 흔히 말하는 「34평형」 · <b>억</b> = 1억 원<br>
-· <b>도심(중심가)</b> = 정부청사·호수공원·나성동 상가 일대<br>
-· <b>생활권</b> = 세종 신도시를 1~6번으로 나눈 큰 동네 묶음<br>
-· <b>BRT</b> = 세종 전용 급행버스</div>
-<div class="big"><div><b>-21%</b><span>2021 최고가 대비</span></div><div><b>83%</b><span>입주 4~6년 차에 내린 단지</span></div><div><b>6.8억</b><span>우리집 지금 추정</span></div></div>
-
-<section><h2><span class="n">1</span>세종 시세 흐름</h2>
-<p class="cap"><b>34평형 1채 값</b> · 그해 팔린 집들의 보통 값</p>
-<div class="chart"><canvas id="ko1"></canvas></div></section>
-
-<section><h2><span class="n">2</span>언제 산 사람이 이겼나</h2>
-<p class="cap"><b>그해 산 집이 지금 얼마나 올랐나</b> · 빨강=이익 파랑=손해</p>
-<div class="chart"><canvas id="ko2"></canvas></div>
-<ul class="b"><li>오래 들고 있어서가 아니라 <b>언제 샀느냐</b>로 갈림</li></ul></section>
-
-<section><h2><span class="n">3</span>무엇이 값을 정하나</h2>
-<p class="cap"><b>막대가 길수록 집값에 큰 영향</b></p>
-<div class="chart short"><canvas id="ko3"></canvas></div>
-<ul class="b"><li>집이 1년 낡을 때마다 <b>3.4% 싸짐</b> · 중심가에서 1km 멀어질 때마다 <b>7.5% 싸짐</b></li></ul></section>
-
-<section><h2><span class="n">4</span>싼 동네는 처음부터 쌌나?</h2>
-<p class="cap"><b>100 = 세종 보통 집값</b> · 100보다 위면 비싼 동네</p>
-<div class="chart tall"><canvas id="ko4"></canvas></div>
-<ul class="b"><li>대부분 <b>처음엔 비쌌다가 낡으며 내려옴</b> (대평 129 → 97)</li>
-<li>고운은 처음부터 낮음 · 나성·어진은 도심이라 버팀</li></ul></section>
-
-<section><h2><span class="n">5</span>같은 단지가 나이 들면</h2>
-<p class="cap"><b>새집일 때보다 몇 % 싸지나</b> · 세종 아파트 133곳 평균</p>
-<div class="chart short"><canvas id="ko5"></canvas></div>
-<ul class="b"><li><b>4~5년째에 한 번에 10% 빠짐</b>, 그 뒤는 천천히</li></ul></section>
-
-<section><h2><span class="n">6</span>산울동 웃돈은 어디서?</h2>
-<p class="cap"><b>세종 보통 집보다 몇 % 비싼가</b> · 이유별로 나눔</p>
-<div class="chart short"><canvas id="ko6"></canvas></div>
-<ul class="b"><li>새집이라 <b>+23%</b>, 중심가에서 멀어서 <b>-14%</b> → 지금 <b>+7.5%</b></li>
-<li>새집 효과가 사라지면 2028년쯤 <b>세종 보통 집값 수준</b>으로</li></ul></section>
-
-<section><h2><span class="n">7</span>우리집 (5단지 34평 복층)</h2>
-<p class="cap"><b>2028년 우리집 값 예상</b> · 세종 전체 집값이 그대로라면</p>
-<div class="chart short"><canvas id="ko7"></canvas></div>
-<div class="tw"><table>
-<tr><th>갈래</th><th>값</th><th>조건</th></tr>
-<tr><td>보통</td><td class="num"><b>6.2억</b></td><td>세종 아파트 10곳 중 8곳이 이랬음</td></tr>
-<tr><td>버팀</td><td class="num">6.8억</td><td>주변 상가·도로가 잘 생기면</td></tr>
-<tr><td>좋음</td><td class="num">7.3억</td><td>+ 정부기관이 더 이사 오면</td></tr>
-</table></div></section>
-
-<section><h2><span class="n">8</span>앞으로 새 아파트</h2>
-<p class="cap"><b>바로 옆 동네(5생활권)에 새로 짓는 집</b> · 세대 수</p>
-<div class="chart short"><canvas id="ko8"></canvas></div>
-<ul class="b"><li>신도시 안 <b>마지막 새 동네</b> · 사람들이 실제로 들어오는 건 <b>2030~32년</b></li>
-<li>그래도 끝은 아님: 신도시 밖에 <b>약 10만 채</b> 더 지을 계획(2040년까지)</li></ul></section>
-
-<section><h2><span class="n">9</span>산울 사람들은 안 파나?</h2>
-<p class="cap"><b>우리 단지에서 팔린 집 수</b> · 3개월마다</p>
-<div class="chart short"><canvas id="ko9"></canvas></div>
-<ul class="b"><li>입주 <b>2년</b>이 되자마자 많이 팔림 → 2년 넘게 갖고 있으면 <b>판 이익에 세금 0원</b>이라서</li><li>2년간 995세대 중 약 10%가 팔았음</li>
-<li>안 판 사람: 집이 이거 1채뿐 · 이미 2억 넘게 올라 급하지 않음 · 더 오를 거라 기대</li></ul></section>
-
-<section><h2><span class="n">10</span>언제 팔까</h2>
-<div class="tl">
-<div class="ev up"><b>지금~27.상</b><span class="t">팔기 좋은 때</span><span class="r">아직 새집이라 비싸게 받음</span></div>
-<div class="ev flat"><b>26.12~</b><span class="t">옆 단지 집 쏟아짐</span><span class="r">8단지도 2년이 됨</span></div>
-<div class="ev down"><b>27~28</b><span class="t">새집 효과 사라짐</span><span class="r">과거엔 평균 -9%</span></div>
-<div class="ev down"><b>30~32</b><span class="t">옆 동네 새집 1만 채</span><span class="r">가장 불리</span></div>
-</div>
-<div class="verdict" style="margin-top:12px">팔기 전 꼭: <b>2년 넘게 갖고 있었는지</b> · 경우에 따라 <b>2년 넘게 살았는지</b> → 세무사에게 확인</div></section>
-
-<div class="note"><b>한계</b><br>
-· 국토부 실거래 직접 분석 · 가족 간 거래·취소 거래 뺌 · 예측은 과거 평균을 적용한 추정<br>
-· 학원가·상가 공실·단지 규모는 측정 못 함 · 카페 글은 검색 요약만 확인<br>
-· 출처: 국토교통부 실거래가 · 행복청 공급계획 · 2040 세종도시기본계획 · 허송·정재호(2022) · 뉴시스·중도일보·세종의소리 등</div>
-</div>
-
-<div data-l="zh">
-<header><h1>世宗房价一览</h1>
-<div class="meta">直接分析国土部实际成交 37,805 笔 · 2026.11</div></header>
-<div class="verdict">① 世宗<b>不是放着就会涨</b>的城市 — 仍比 2021 年最高价便宜 21%<br>
-② 决定房价第一是<b>是不是新房</b> · 第二是<b>离市中心近不近</b><br>
-③ 山蔚洞贵主要因为<b>是新房</b> → 4~5 年后这部分溢价可能消失</div>
-<div class="note" style="margin:12px 0"><b>先了解几个词</b><br>
-· <b>实际成交</b> = 向政府申报的真实成交价<br>
-· <b>分售价</b> = 新房第一次购买时的价格<br>
-· <b>84㎡</b> = 韩国常见的「34 坪」户型 · <b>亿</b> = 1 亿韩元<br>
-· <b>市中心</b> = 政府大楼·湖水公园·罗城洞商圈一带<br>
-· <b>生活圈</b> = 世宗新城划分的 1~6 号大片区<br>
-· <b>BRT</b> = 世宗专用快速公交</div>
-<div class="big"><div><b>-21%</b><span>较 2021 最高价</span></div><div><b>83%</b><span>入住 4~6 年后下跌的小区</span></div><div><b>6.8亿</b><span>我家目前估值(韩元)</span></div></div>
-
-<section><h2><span class="n">1</span>世宗房价走势</h2>
-<p class="cap"><b>一套 34 坪房子的价格</b> · 当年成交的一般价格</p>
-<div class="chart"><canvas id="zh1"></canvas></div></section>
-
-<section><h2><span class="n">2</span>哪一年买的人赚了</h2>
-<p class="cap"><b>那一年买的房子现在涨了多少</b> · 红=赚 蓝=亏</p>
-<div class="chart"><canvas id="zh2"></canvas></div>
-<ul class="b"><li>输赢取决于<b>何时买入</b>，而不是持有多久</li></ul></section>
-
-<section><h2><span class="n">3</span>什么决定房价</h2>
-<p class="cap"><b>柱子越长，对房价影响越大</b></p>
-<div class="chart short"><canvas id="zh3"></canvas></div>
-<ul class="b"><li>房子每旧 1 年<b>便宜 3.4%</b> · 离市中心每远 1km <b>便宜 7.5%</b></li></ul></section>
-
-<section><h2><span class="n">4</span>便宜的区一开始就便宜吗?</h2>
-<p class="cap"><b>100 = 世宗一般房价</b> · 高于 100 就是贵的区</p>
-<div class="chart tall"><canvas id="zh4"></canvas></div>
-<ul class="b"><li>大多数是<b>新房时贵，变旧后下滑</b>（大坪 129 → 97）</li>
-<li>高云一开始就低 · 罗城、於真在市中心所以撑住</li></ul></section>
-
-<section><h2><span class="n">5</span>同一小区变旧后</h2>
-<p class="cap"><b>比新房时便宜了百分之几</b> · 世宗 133 个小区平均</p>
-<div class="chart short"><canvas id="zh5"></canvas></div>
-<ul class="b"><li><b>第 4~5 年一次性跌 10%</b>，之后缓慢下降</li></ul></section>
-
-<section><h2><span class="n">6</span>山蔚洞的溢价从哪来?</h2>
-<p class="cap"><b>比世宗一般房子贵百分之几</b> · 按原因拆分</p>
-<div class="chart short"><canvas id="zh6"></canvas></div>
-<ul class="b"><li>新房 <b>+23%</b>，离市中心远 <b>-14%</b> → 现在 <b>+7.5%</b></li>
-<li>新房效应消失后，2028 年左右回到<b>世宗一般房价水平</b></li></ul></section>
-
-<section><h2><span class="n">7</span>我家（5 区 34 坪复式）</h2>
-<p class="cap"><b>2028 年我家房价预估</b> · 假设世宗整体房价不变</p>
-<div class="chart short"><canvas id="zh7"></canvas></div>
-<div class="tw"><table>
-<tr><th>情景</th><th>价格</th><th>条件</th></tr>
-<tr><td>一般</td><td class="num"><b>6.2亿</b></td><td>世宗 10 个小区里有 8 个是这样</td></tr>
-<tr><td>撑住</td><td class="num">6.8亿</td><td>周边商铺·道路建好的话</td></tr>
-<tr><td>乐观</td><td class="num">7.3亿</td><td>+ 更多政府机关搬来</td></tr>
-</table></div></section>
-
-<section><h2><span class="n">8</span>未来新房供应</h2>
-<p class="cap"><b>隔壁新区（第 5 生活圈）新建住房</b> · 户数</p>
-<div class="chart short"><canvas id="zh8"></canvas></div>
-<ul class="b"><li>新城内<b>最后一个新区</b> · 真正入住集中在 <b>2030~32 年</b></li>
-<li>但不是终点：新城外还计划新增<b>约 10 万套</b>（2040 规划）</li></ul></section>
-
-<section><h2><span class="n">9</span>山蔚洞的人不卖吗?</h2>
-<p class="cap"><b>我们小区卖出的套数</b> · 每 3 个月</p>
-<div class="chart short"><canvas id="zh9"></canvas></div>
-<ul class="b"><li>入住满 <b>2 年</b>后马上大量卖出 → 持有满 2 年<b>卖房收益免税</b></li><li>两年内 995 户中约 10% 已卖</li>
-<li>没卖的人：只有这一套房 · 已涨 2 亿以上不着急 · 期待继续上涨</li></ul></section>
-
-<section><h2><span class="n">10</span>什么时候卖</h2>
-<div class="tl">
-<div class="ev up"><b>现在~27上</b><span class="t">卖出好时机</span><span class="r">还是新房，能卖高价</span></div>
-<div class="ev flat"><b>26.12~</b><span class="t">隔壁小区大量挂牌</span><span class="r">8 区也满 2 年</span></div>
-<div class="ev down"><b>27~28</b><span class="t">新房效应消失</span><span class="r">过去平均 -9%</span></div>
-<div class="ev down"><b>30~32</b><span class="t">隔壁新房 1 万户</span><span class="r">最不利</span></div>
-</div>
-<div class="verdict" style="margin-top:12px">卖之前必须确认：<b>是否持有满 2 年</b> · 有些情况还要<b>住满 2 年</b> → 请咨询税务师</div></section>
-
-<div class="note"><b>局限</b><br>
-· 直接分析国土部实际成交 · 已排除亲属间交易和取消交易 · 预测为套用过去平均值的估算<br>
-· 未能测量补习街、商铺空置、小区规模 · 网络社区仅查看了搜索摘要<br>
-· 来源：韩国国土交通部实际成交价 · 行政中心复合城市建设厅供应计划 · 2040 世宗城市基本规划 · 许松·郑在浩(2022) · Newsis、中都日报、世宗之声等</div>
-</div>
+<div data-l="ko" class="on"><header><h1>세종 집값 보고서 2차</h1><div class="meta">2026.11.10 · 국토부 실거래 매매 5만 6천 건 · 전월세 17만 건 직접 분석 + 발표된 계획만 사용</div></header><div class="verdict">① 앞으로 1~2년은 <b>전세가 먼저 오릅니다</b> — 2027년 새 아파트 입주 0채인데 공무원 3천 명이 옵니다<br>② 매매는 <b>금리 인상이 누르고 있어</b> 크게 오를 근거는 아직 약합니다<br>③ 우리집은 <b>2027년 상반기까지 파는 것이 유리</b> — 지난 보고서 결론 그대로</div><div class="todo"><b>지금 볼 것 3가지</b><ol><li><b>11월 26일</b> 기준금리 발표 — 또 오르면 매매에 불리</li><li><b>12월 말</b> 공무원 아파트 특별분양 부활 여부 — 되살아나면 공무원이 새 아파트로 몰림</li><li>팔 생각이면 <b>2027년 1~6월</b>에 내놓을 준비 · 2년 보유 여부는 세무사에게 확인</li></ol></div><div class="big"><div><b>2.8억</b><span>34평 전세 평균<br>(25.1월 2.4억)</span></div><div><b>+0.3%</b><span>최근 1년 매매<br>(같은 단지 비교)</span></div><div><b>0채</b><span>2027년<br>새 아파트 입주</span></div></div><div class="note"><b>먼저 알아둘 말</b><br>· <b>34평형</b> = 전용 84㎡ · <b>억</b> = 1억 원 · <b>전세율</b> = 전세가 ÷ 매매가<br>· <b>특별분양(특공)</b> = 새 아파트 일부를 공무원에게 먼저 파는 제도 (2021년 폐지)<br>· <b>기준금리</b> = 한국은행이 정하는 금리. 오르면 대출 이자가 오름<br>· <b>같은 단지 비교</b> = 같은 아파트의 이번 분기 값 ÷ 지난 분기 값 (동네 섞임 효과 제거)</div><section><h2><span class="n">1</span>앞으로 정해진 일정</h2><p class="cap"><b>발표된 것만</b> · ▲ 집값에 도움 ▼ 부담 ■ 양쪽 다</p><div class="tw"><table class="tlt"><tr><th>언제</th><th></th><th>무슨 일</th><th>확실도</th></tr><tr><td class="nw"><b>26.11.26</b></td><td><span class="pill down">▼</span></td><td><b>기준금리 결정</b><br><span class="sm">지금 3.00% · 7·8월 연속 인상 · 추가 인상 전망 많음</span></td><td class="sm nw">예정</td></tr><tr><td class="nw"><b>26.12 말</b></td><td><span class="pill flat">■</span></td><td><b>공무원 특별분양 부활 결정</b><br><span class="sm">세종시가 부활 건의 · 국토부는 신중</span></td><td class="sm nw">미정</td></tr><tr><td class="nw"><b>26 연내</b></td><td><span class="pill up">▲</span></td><td><b>행정수도 특별법</b><br><span class="sm">5건 발의 · 국회 심사 중 · 아직 통과 안 됨</span></td><td class="sm nw">미정</td></tr><tr><td class="nw"><b>27.3</b></td><td><span class="pill flat">■</span></td><td><b>서울~세종 고속도로 전 구간 개통</b><br><span class="sm">서울 출퇴근이 쉬워짐 → 이사 대신 출퇴근할 수도</span></td><td class="sm nw">목표</td></tr><tr><td class="nw"><b>27 상반기</b></td><td><span class="pill up">▲</span></td><td><b>1차 6개 기관 이전</b><br><span class="sm">방송미디어통신위 등</span></td><td class="sm nw">확정 계획</td></tr><tr><td class="nw"><b>27 하반기</b></td><td><span class="pill up">▲</span></td><td><b>19개 기관 추가 이전</b><br><span class="sm">금융위 등 · 2027년 합계 27개 기관 2,995명</span></td><td class="sm nw">확정 계획</td></tr><tr><td class="nw"><b>27.8</b></td><td><span class="pill flat">■</span></td><td><b>선수촌 2,300가구 → 공무원 임대</b><br><span class="sm">유니버시아드(8.1~12) 끝난 뒤 · 입주 날짜 미정</span></td><td class="sm nw">계획</td></tr><tr><td class="nw"><b>27.8</b></td><td><span class="pill up">▲</span></td><td><b>대통령 세종집무실 착공</b><br><span class="sm">2029년 8월 입주</span></td><td class="sm nw">확정 계획</td></tr><tr><td class="nw"><b>28</b></td><td><span class="pill down">▼</span></td><td><b>새 아파트 1,765가구 입주</b><br><span class="sm">5-1생활권 엘리프 424가구(28.2) 등</span></td><td class="sm nw">예정</td></tr><tr><td class="nw"><b>29</b></td><td><span class="pill up">▲</span></td><td><b>국회 세종의사당 착공</b><br><span class="sm">2033년 완공 목표</span></td><td class="sm nw">목표</td></tr><tr><td class="nw"><b>~31</b></td><td><span class="pill up">▲</span></td><td><b>나머지 17개 기관 6,934명</b><br><span class="sm">경찰청·감사원·외교부·국방부 등 · 새 청사 지은 뒤</span></td><td class="sm nw">확정 계획</td></tr><tr><td class="nw"><b>30~32</b></td><td><span class="pill down">▼</span></td><td><b>5생활권 새 아파트 약 1만 채 입주</b><br><span class="sm">26.11 2,191가구 분양</span></td><td class="sm nw">예정</td></tr><tr><td class="nw"><b>34 말</b></td><td><span class="pill up">▲</span></td><td><b>CTX(대전~세종~청주 급행철도)</b><br><span class="sm">28년 말 착공 목표</span></td><td class="sm nw">목표</td></tr></table></div><p class="cap"><b>이미 빠진 것</b>: 해양수산부 부산 이전 (2025.12 · 본부 정원 623명)</p></section><section><h2><span class="n">2</span>사람은 오는데 집은?</h2><p class="cap"><b>2027년에 오는 공무원 vs 그해 생기는 집</b></p><div class="chart short"><canvas id="ko2"></canvas></div><ul class="b"><li>2027년: 공무원 <b>2,995명</b> 오는데 새 아파트 입주는 <b>0채</b></li><li>나라 임대 2,300가구는 <b>8월 이후</b> → 상반기에 오는 사람은 일반 전월세를 구해야 함</li><li>2028~2031년에 오는 약 <b>7천 명</b>의 집 대책은 <b>아직 발표 없음</b></li></ul></section><section><h2><span class="n">3</span>전세가 먼저 움직인다</h2><p class="cap"><b>같은 단지 비교 · 2024년 1~3월 = 100</b> · 신도시 34평</p><div class="chart"><canvas id="ko3"></canvas></div><ul class="b"><li>전세 <b>+14%</b> · 매매 <b>+6%</b> (2024년 초 대비)</li><li>이전 발표(10.13) 뒤 10월~ 전세 <b>+3.6%</b> (한 분기)</li><li>매매는 금리 인상 전후인 26년 4~9월에 <b>-2.3%</b></li></ul></section><section><h2><span class="n">4</span>동네별 시세 (34평)</h2><p class="cap"><b>그해 팔린 34평의 가운데 값</b> · 단위 억 · 전세는 최근 6개월</p><div class="tw"><table class="dt"><tr><th>동네</th><th class=num>2021</th><th class=num>2026</th><th class=num>변화</th><th class=num>전세</th><th class=num>전세율</th></tr><tr><td><b>나성</b><br><span class="sm">2021년 입주</span></td><td class="num">8.0</td><td class="num"><b>9.4</b></td><td class="num"><span class="pill up">+18%</span></td><td class="num">3.8</td><td class="num">41%</td></tr>
+<tr><td><b>어진</b><br><span class="sm">2021년 입주</span></td><td class="num">8.4</td><td class="num"><b>7.6</b></td><td class="num"><span class="pill down">-9%</span></td><td class="num">3.0</td><td class="num">40%</td></tr>
+<tr><td><b>새롬</b><br><span class="sm">2017년 입주</span></td><td class="num">8.6</td><td class="num"><b>7.4</b></td><td class="num"><span class="pill down">-14%</span></td><td class="num">3.1</td><td class="num">42%</td></tr>
+<tr class="hi"><td><b>산울</b><br><span class="sm">2024년 입주</span></td><td class="num">—</td><td class="num"><b>7.1</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.6</td><td class="num">40%</td></tr>
+<tr><td><b>해밀</b><br><span class="sm">2020년 입주</span></td><td class="num">8.9</td><td class="num"><b>7.0</b></td><td class="num"><span class="pill down">-22%</span></td><td class="num">3.1</td><td class="num">46%</td></tr>
+<tr><td><b>다정</b><br><span class="sm">2018년 입주</span></td><td class="num">8.8</td><td class="num"><b>6.9</b></td><td class="num"><span class="pill down">-21%</span></td><td class="num">2.9</td><td class="num">42%</td></tr>
+<tr><td><b>반곡</b><br><span class="sm">2019년 입주</span></td><td class="num">8.5</td><td class="num"><b>6.9</b></td><td class="num"><span class="pill down">-19%</span></td><td class="num">3.0</td><td class="num">44%</td></tr>
+<tr><td><b>보람</b><br><span class="sm">2017년 입주</span></td><td class="num">8.4</td><td class="num"><b>6.6</b></td><td class="num"><span class="pill down">-21%</span></td><td class="num">3.0</td><td class="num">45%</td></tr>
+<tr><td><b>소담</b><br><span class="sm">2017년 입주</span></td><td class="num">8.3</td><td class="num"><b>6.3</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">2.8</td><td class="num">44%</td></tr>
+<tr><td><b>대평</b><br><span class="sm">2018년 입주</span></td><td class="num">8.8</td><td class="num"><b>6.1</b></td><td class="num"><span class="pill down">-30%</span></td><td class="num">2.7</td><td class="num">45%</td></tr>
+<tr class="hi"><td><b>도담</b><br><span class="sm">2014년 입주</span></td><td class="num">8.3</td><td class="num"><b>5.9</b></td><td class="num"><span class="pill down">-28%</span></td><td class="num">2.7</td><td class="num">46%</td></tr>
+<tr><td><b>집현</b><br><span class="sm">2021년 입주</span></td><td class="num">—</td><td class="num"><b>5.9</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.9</td><td class="num">48%</td></tr>
+<tr><td><b>종촌</b><br><span class="sm">2014년 입주</span></td><td class="num">7.3</td><td class="num"><b>5.5</b></td><td class="num"><span class="pill down">-25%</span></td><td class="num">2.4</td><td class="num">44%</td></tr>
+<tr><td><b>아름</b><br><span class="sm">2014년 입주</span></td><td class="num">6.8</td><td class="num"><b>5.1</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">2.3</td><td class="num">45%</td></tr>
+<tr><td><b>한솔</b><br><span class="sm">2012년 입주</span></td><td class="num">6.7</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill down">-25%</span></td><td class="num">2.4</td><td class="num">48%</td></tr>
+<tr><td><b>고운</b><br><span class="sm">2015년 입주</span></td><td class="num">6.6</td><td class="num"><b>4.5</b></td><td class="num"><span class="pill down">-31%</span></td><td class="num">2.4</td><td class="num">53%</td></tr>
+<tr><td><b>조치원</b><br><span class="sm">2008년 입주</span></td><td class="num">3.4</td><td class="num"><b>2.6</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">1.8</td><td class="num">70%</td></tr></table></div><ul class="b"><li>신도시 전체: 2021년 <b>7.6억</b> → 2026년 <b>6.2억</b> (-18%)</li><li><b>2021년보다 오른 곳은 나성동뿐</b> (중심 상가 + 2021년 새 아파트)</li><li>많이 빠진 곳: 고운 -31% · 대평 -30% · 도담 -28% (대부분 2014~2018년 입주)</li><li>산울·집현은 2021년에 거래가 없어 비교 못 함</li></ul></section><section><h2><span class="n">5</span>도담동 자세히</h2><p class="cap"><b>단지별 34평 값</b> · 단위 억 · 2026년 거래 3건 이상인 단지</p><div class="tw"><table class="dt"><tr><th>단지 (입주 · 26년 거래)</th><th class=num>2021</th><th class=num>2026</th><th class=num>변화</th><th class=num>전세</th></tr><tr><td>도램마을10단지 호반 어반시티<br><span class="sm">2014 · 23건</span></td><td class="num">9.0</td><td class="num"><b>7.2</b></td><td class="num"><span class="pill down">-20%</span></td><td class="num">3.0</td></tr>
+<tr><td>현대힐스테이트 (도램마을15단지)<br><span class="sm">2014 · 26건</span></td><td class="num">8.5</td><td class="num"><b>6.5</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">2.9</td></tr>
+<tr><td>도램마을11단지 (반도유보라)<br><span class="sm">2017 · 23건</span></td><td class="num">8.2</td><td class="num"><b>6.0</b></td><td class="num"><span class="pill down">-27%</span></td><td class="num">3.0</td></tr>
+<tr><td>도램마을20단지 (에듀파크)<br><span class="sm">2014 · 18건</span></td><td class="num">7.7</td><td class="num"><b>5.8</b></td><td class="num"><span class="pill down">-25%</span></td><td class="num">2.5</td></tr>
+<tr><td>엘가도램마을12단지<br><span class="sm">2014 · 9건</span></td><td class="num">—</td><td class="num"><b>5.8</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.7</td></tr>
+<tr><td>도램마을1단지 (웅진스타클래스)<br><span class="sm">2014 · 9건</span></td><td class="num">7.7</td><td class="num"><b>5.6</b></td><td class="num"><span class="pill down">-27%</span></td><td class="num">2.6</td></tr>
+<tr><td>도램마을16단지 (모아미래도)<br><span class="sm">2015 · 12건</span></td><td class="num">—</td><td class="num"><b>5.1</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.6</td></tr>
+<tr><td>도램마을17단지 (모아미래도)<br><span class="sm">2015 · 3건</span></td><td class="num">—</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.5</td></tr>
+<tr><td>도램마을 19단지 (모아미래도)<br><span class="sm">2015 · 4건</span></td><td class="num">—</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.3</td></tr>
+<tr><td>도램마을18단지 (모아미래도)<br><span class="sm">2015 · 3건</span></td><td class="num">7.5</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill down">-32%</span></td><td class="num">2.6</td></tr></table></div><ul class="b"><li>도담동 34평 보통 값 <b>5.9억</b> · 2021년 8.3억보다 <b>-28%</b> (신도시 평균 -18%보다 더 빠짐)</li><li>대부분 <b>2014~2015년 입주 (12년 차)</b> → 「새집 웃돈」은 이미 다 빠진 상태</li><li>전세율 <b>46%</b> · 26년 하반기 전세 <b>+3.7%</b> / 매매 -1.7%</li><li><span class="guess">추정</span> 정부청사 바로 북쪽이라 출퇴근 수요가 있을 수 있음 — 2012~14년 1차 이전 때 동네별 자료로는 확인 못 함</li></ul></section><section><h2><span class="n">6</span>2027년 말까지 예측</h2><p class="cap"><b>신도시 34평 · 지금 대비</b> · 과거 실제로 있었던 움직임을 근거로 함</p><div class="tw"><table><tr><th></th><th>매매</th><th>조건</th><th>근거 (실측)</th></tr><tr><td><b>나쁨</b></td><td class="num"><b>-3%</b></td><td>금리 2번 더 인상 · 특공 부활로 신축 쏠림</td><td class="sm">금리 인상 전후 26년 4~9월 -2.3%</td></tr><tr><td><b>보통</b></td><td class="num"><b>+3%</b></td><td>지금 흐름 + 전세가 매매를 밀어 올림</td><td class="sm">최근 1년 +0.3% · 전세 +5.6%</td></tr><tr><td><b>좋음</b></td><td class="num"><b>+8%</b></td><td>행정수도 특별법 통과 + 금리 멈춤</td><td class="sm">25년 4~6월(대선·행정수도 공약) 한 분기 +6%</td></tr></table></div><ul class="b"><li><b>전세: +5~10%</b> <span class="guess">추정</span> — 최근 1년 +5.6%에 「2027년 입주 0채 + 공무원 3천 명」이 더해짐</li><li><b>2020년 같은 급등(2019→2021 +82%)은 근거 부족</b> — 그때 기준금리 0.5%, 지금 3.0%이고 오르는 중</li><li>특공이 부활하면 공무원 수요는 <b>5-1생활권 새 아파트</b>로 가고, 기존 집에는 덜 옴</li></ul></section><section><h2><span class="n">7</span>우리집 (5단지 34평 복층)</h2><p class="cap"><b>2028년 예상 값</b> · 단위 억 · 지난 보고서 계산 × 위 예측</p><div class="tw"><table><tr><th>세종 전체 흐름</th><th class=num>새집 웃돈 빠짐</th><th class=num>웃돈 버팀</th></tr><tr><td><b>나쁨</b> (-3%)</td><td class="num"><b>6.0</b></td><td class="num">6.6</td></tr><tr class=hi><td><b>보통</b> (+3%)</td><td class="num"><b>6.4</b></td><td class="num">7.0</td></tr><tr><td><b>좋음</b> (+8%)</td><td class="num"><b>6.7</b></td><td class="num">7.3</td></tr></table></div><ul class="b"><li>지난 보고서: 지금 <b>6.8억</b> 추정 · 산울 웃돈 +23% 중 대부분은 「새집이라서」</li><li>최근 산울 34평 거래: 2단지 7.2억(10월) · 7단지 6.5억(10월) · 6단지 6.3억(10월, 3층)</li><li>가장 가능성 높은 칸: <b>보통 × 웃돈 빠짐 = 6.4억</b> <span class="guess">추정</span></li></ul></section><section><h2><span class="n">8</span>언제 팔까 (갱신)</h2><div class="tl"><div class="ev up"><b>지금~27.상</b><span class="t">팔기 좋은 때</span><span class="r">아직 새집 · 전세가 올라 사려는 사람이 늘어남</span></div><div class="ev flat"><b>27.3</b><span class="t">고속도로 개통</span><span class="r">출퇴근이 쉬워져 이사 수요가 줄 수도</span></div><div class="ev flat"><b>27.하</b><span class="t">선수촌 임대 2,300가구</span><span class="r">전세 부족이 일부 풀림</span></div><div class="ev down"><b>27~28</b><span class="t">새집 효과 사라짐</span><span class="r">과거 평균 -9%</span></div><div class="ev down"><b>30~32</b><span class="t">옆 동네 새집 1만 채</span><span class="r">가장 불리</span></div></div><div class="verdict" style="margin-top:12px">결론 그대로: <b>2027년 상반기</b>. 공무원 이전은 <b>전세에 먼저</b> 영향을 주고, 우리집 값을 끌어올릴 만큼 크다는 근거는 아직 없음</div></section><div class="note"><b>한계</b><br>· 34평 = 전용 82~86㎡ · 가족 간 거래·취소된 거래 뺌 · 2026년 = 1월~11월 10일 신고분<br>· 전세에는 재계약(5% 상한)도 섞여 있어 실제 새 전세보다 덜 오른 것처럼 보일 수 있음<br>· 예측 3갈래는 과거 실제 움직임을 그대로 적용한 추정 · 학원가·상가 공실은 측정 못 함<br>· 출처: 국토교통부 실거래가 · 행정안전부 2차 이전 계획(26.10.13) · 국토부 업무보고(26.1) · 한국은행 · 한국부동산원 · 헤럴드경제·이투데이·아이뉴스24·머니투데이·굿모닝충청·세종의소리·비즈워치 · <a href="v1.html">지난 보고서(1차) 보기</a></div></div>
+<div data-l="zh"><header><h1>世宗房价报告 第2版</h1><div class="meta">2026.11.10 · 直接分析国土部实际成交：买卖 5.6 万笔 · 租赁 17 万笔 + 只用已公布的计划</div></header><div class="verdict">① 未来 1~2 年<b>全租(전세)会先涨</b> — 2027 年新房入住 0 套，却有 3 千名公务员搬来<br>② 买卖价<b>被加息压着</b>，大涨的依据还不够<br>③ 我家<b>2027 年上半年前卖比较有利</b> — 与上次报告结论相同</div><div class="todo"><b>现在要关注的 3 件事</b><ol><li><b>11 月 26 日</b>基准利率公布 — 再加息对买卖不利</li><li><b>12 月底</b>公务员优先分售是否恢复 — 若恢复，公务员会集中买新房</li><li>若打算卖，<b>2027 年 1~6 月</b>挂牌 · 是否持有满 2 年请问税务师</li></ol></div><div class="big"><div><b>2.8亿</b><span>34 坪全租平均<br>(25年1月 2.4亿)</span></div><div><b>+0.3%</b><span>近 1 年买卖<br>(同小区比较)</span></div><div><b>0 套</b><span>2027 年<br>新房入住</span></div></div><div class="note"><b>先了解几个词</b><br>· <b>34 坪</b> = 专用 84㎡ · <b>亿</b> = 1 亿韩元 · <b>全租率</b> = 全租价 ÷ 买卖价<br>· <b>优先分售(特供)</b> = 新房一部分先卖给公务员的制度（2021 年废止）<br>· <b>基准利率</b> = 韩国银行定的利率，上调则贷款利息上涨<br>· <b>同小区比较</b> = 同一小区本季价格 ÷ 上季价格（排除地区混合影响）</div><section><h2><span class="n">1</span>已确定的未来日程</h2><p class="cap"><b>只列已公布的</b> · ▲ 利好房价 ▼ 利空 ■ 两面都有</p><div class="tw"><table class="tlt"><tr><th>时间</th><th></th><th>事件</th><th>确定程度</th></tr><tr><td class="nw"><b>26.11.26</b></td><td><span class="pill down">▼</span></td><td><b>基准利率决定</b><br><span class="sm">现在 3.00% · 7、8 月连续加息 · 多数预计还会加</span></td><td class="sm nw">预定</td></tr><tr><td class="nw"><b>26.12 底</b></td><td><span class="pill flat">■</span></td><td><b>是否恢复公务员优先分售</b><br><span class="sm">世宗市建议恢复 · 国土部态度谨慎</span></td><td class="sm nw">未定</td></tr><tr><td class="nw"><b>26 年内</b></td><td><span class="pill up">▲</span></td><td><b>行政首都特别法</b><br><span class="sm">已提出 5 件 · 国会审议中 · 尚未通过</span></td><td class="sm nw">未定</td></tr><tr><td class="nw"><b>27.3</b></td><td><span class="pill flat">■</span></td><td><b>首尔~世宗高速公路全线通车</b><br><span class="sm">通勤首尔更方便 → 可能通勤而不搬家</span></td><td class="sm nw">目标</td></tr><tr><td class="nw"><b>27 上半年</b></td><td><span class="pill up">▲</span></td><td><b>第一批 6 个机关搬迁</b><br><span class="sm">广播媒体通信委员会等</span></td><td class="sm nw">确定计划</td></tr><tr><td class="nw"><b>27 下半年</b></td><td><span class="pill up">▲</span></td><td><b>再搬 19 个机关</b><br><span class="sm">金融委员会等 · 2027 年共 27 个机关 2,995 人</span></td><td class="sm nw">确定计划</td></tr><tr><td class="nw"><b>27.8</b></td><td><span class="pill flat">■</span></td><td><b>运动员村 2,300 户 → 公务员租赁房</b><br><span class="sm">世界大学生运动会(8.1~12)结束后 · 入住日期未定</span></td><td class="sm nw">计划</td></tr><tr><td class="nw"><b>27.8</b></td><td><span class="pill up">▲</span></td><td><b>总统世宗办公室开工</b><br><span class="sm">2029 年 8 月入驻</span></td><td class="sm nw">确定计划</td></tr><tr><td class="nw"><b>28</b></td><td><span class="pill down">▼</span></td><td><b>新房 1,765 户入住</b><br><span class="sm">5-1 生活圈 Elif 424 户(28.2)等</span></td><td class="sm nw">预定</td></tr><tr><td class="nw"><b>29</b></td><td><span class="pill up">▲</span></td><td><b>国会世宗议事堂开工</b><br><span class="sm">目标 2033 年完工</span></td><td class="sm nw">目标</td></tr><tr><td class="nw"><b>~31</b></td><td><span class="pill up">▲</span></td><td><b>其余 17 个机关 6,934 人</b><br><span class="sm">警察厅·监察院·外交部·国防部等 · 新楼建好后</span></td><td class="sm nw">确定计划</td></tr><tr><td class="nw"><b>30~32</b></td><td><span class="pill down">▼</span></td><td><b>第 5 生活圈新房约 1 万套入住</b><br><span class="sm">26.11 分售 2,191 户</span></td><td class="sm nw">预定</td></tr><tr><td class="nw"><b>34 底</b></td><td><span class="pill up">▲</span></td><td><b>CTX(大田~世宗~清州快速铁路)</b><br><span class="sm">目标 28 年底开工</span></td><td class="sm nw">目标</td></tr></table></div><p class="cap"><b>已经减少的</b>：海洋水产部迁往釜山（2025.12 · 本部编制 623 人）</p></section><section><h2><span class="n">2</span>人来了，房子呢?</h2><p class="cap"><b>2027 年搬来的公务员 vs 当年新增住房</b></p><div class="chart short"><canvas id="zh2"></canvas></div><ul class="b"><li>2027 年：公务员 <b>2,995 人</b>搬来，新房入住 <b>0 套</b></li><li>国家租赁房 2,300 户要到 <b>8 月以后</b> → 上半年来的人只能自己找房租</li><li>2028~2031 年再来的约 <b>7 千人</b>，住房方案<b>尚未公布</b></li></ul></section><section><h2><span class="n">3</span>全租先动</h2><p class="cap"><b>同小区比较 · 2024 年 1~3 月 = 100</b> · 新城 34 坪</p><div class="chart"><canvas id="zh3"></canvas></div><ul class="b"><li>全租 <b>+14%</b> · 买卖 <b>+6%</b>（与 2024 年初相比）</li><li>搬迁公布(10.13)后，10 月起全租 <b>+3.6%</b>（一个季度）</li><li>买卖在加息前后的 26 年 4~9 月 <b>-2.3%</b></li></ul></section><section><h2><span class="n">4</span>各区行情 (34 坪)</h2><p class="cap"><b>当年成交 34 坪的中间价</b> · 单位 亿 · 全租为近 6 个月</p><div class="tw"><table class="dt"><tr><th>地区</th><th class=num>2021</th><th class=num>2026</th><th class=num>变化</th><th class=num>全租</th><th class=num>全租率</th></tr><tr><td><b>罗城 나성</b><br><span class="sm">2021年入住</span></td><td class="num">8.0</td><td class="num"><b>9.4</b></td><td class="num"><span class="pill up">+18%</span></td><td class="num">3.8</td><td class="num">41%</td></tr>
+<tr><td><b>於真 어진</b><br><span class="sm">2021年入住</span></td><td class="num">8.4</td><td class="num"><b>7.6</b></td><td class="num"><span class="pill down">-9%</span></td><td class="num">3.0</td><td class="num">40%</td></tr>
+<tr><td><b>Saerom 새롬</b><br><span class="sm">2017年入住</span></td><td class="num">8.6</td><td class="num"><b>7.4</b></td><td class="num"><span class="pill down">-14%</span></td><td class="num">3.1</td><td class="num">42%</td></tr>
+<tr class="hi"><td><b>山蔚 산울</b><br><span class="sm">2024年入住</span></td><td class="num">—</td><td class="num"><b>7.1</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.6</td><td class="num">40%</td></tr>
+<tr><td><b>海密 해밀</b><br><span class="sm">2020年入住</span></td><td class="num">8.9</td><td class="num"><b>7.0</b></td><td class="num"><span class="pill down">-22%</span></td><td class="num">3.1</td><td class="num">46%</td></tr>
+<tr><td><b>多情 다정</b><br><span class="sm">2018年入住</span></td><td class="num">8.8</td><td class="num"><b>6.9</b></td><td class="num"><span class="pill down">-21%</span></td><td class="num">2.9</td><td class="num">42%</td></tr>
+<tr><td><b>盘谷 반곡</b><br><span class="sm">2019年入住</span></td><td class="num">8.5</td><td class="num"><b>6.9</b></td><td class="num"><span class="pill down">-19%</span></td><td class="num">3.0</td><td class="num">44%</td></tr>
+<tr><td><b>Boram 보람</b><br><span class="sm">2017年入住</span></td><td class="num">8.4</td><td class="num"><b>6.6</b></td><td class="num"><span class="pill down">-21%</span></td><td class="num">3.0</td><td class="num">45%</td></tr>
+<tr><td><b>Sodam 소담</b><br><span class="sm">2017年入住</span></td><td class="num">8.3</td><td class="num"><b>6.3</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">2.8</td><td class="num">44%</td></tr>
+<tr><td><b>大坪 대평</b><br><span class="sm">2018年入住</span></td><td class="num">8.8</td><td class="num"><b>6.1</b></td><td class="num"><span class="pill down">-30%</span></td><td class="num">2.7</td><td class="num">45%</td></tr>
+<tr class="hi"><td><b>道潭 도담</b><br><span class="sm">2014年入住</span></td><td class="num">8.3</td><td class="num"><b>5.9</b></td><td class="num"><span class="pill down">-28%</span></td><td class="num">2.7</td><td class="num">46%</td></tr>
+<tr><td><b>集贤 집현</b><br><span class="sm">2021年入住</span></td><td class="num">—</td><td class="num"><b>5.9</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.9</td><td class="num">48%</td></tr>
+<tr><td><b>钟村 종촌</b><br><span class="sm">2014年入住</span></td><td class="num">7.3</td><td class="num"><b>5.5</b></td><td class="num"><span class="pill down">-25%</span></td><td class="num">2.4</td><td class="num">44%</td></tr>
+<tr><td><b>Areum 아름</b><br><span class="sm">2014年入住</span></td><td class="num">6.8</td><td class="num"><b>5.1</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">2.3</td><td class="num">45%</td></tr>
+<tr><td><b>Hansol 한솔</b><br><span class="sm">2012年入住</span></td><td class="num">6.7</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill down">-25%</span></td><td class="num">2.4</td><td class="num">48%</td></tr>
+<tr><td><b>高云 고운</b><br><span class="sm">2015年入住</span></td><td class="num">6.6</td><td class="num"><b>4.5</b></td><td class="num"><span class="pill down">-31%</span></td><td class="num">2.4</td><td class="num">53%</td></tr>
+<tr><td><b>鸟致院 조치원</b><br><span class="sm">2008年入住</span></td><td class="num">3.4</td><td class="num"><b>2.6</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">1.8</td><td class="num">70%</td></tr></table></div><ul class="b"><li>新城整体：2021 年 <b>7.6亿</b> → 2026 年 <b>6.2亿</b>（-18%）</li><li><b>比 2021 年涨的只有罗城洞</b>（中心商圈 + 2021 年新房）</li><li>跌得多的：高云 -31% · 大坪 -30% · 道潭 -28%（多为 2014~2018 年入住）</li><li>山蔚、集贤 2021 年没有成交，无法比较</li></ul></section><section><h2><span class="n">5</span>道潭洞(도담동)详细</h2><p class="cap"><b>各小区 34 坪价格</b> · 单位 亿 · 2026 年成交 3 笔以上的小区</p><div class="tw"><table class="dt"><tr><th>小区 (入住 · 26年成交)</th><th class=num>2021</th><th class=num>2026</th><th class=num>变化</th><th class=num>全租</th></tr><tr><td>도램마을10단지 호반 어반시티<br><span class="sm">2014 · 23笔</span></td><td class="num">9.0</td><td class="num"><b>7.2</b></td><td class="num"><span class="pill down">-20%</span></td><td class="num">3.0</td></tr>
+<tr><td>현대힐스테이트 (도램마을15단지)<br><span class="sm">2014 · 26笔</span></td><td class="num">8.5</td><td class="num"><b>6.5</b></td><td class="num"><span class="pill down">-24%</span></td><td class="num">2.9</td></tr>
+<tr><td>도램마을11단지 (반도유보라)<br><span class="sm">2017 · 23笔</span></td><td class="num">8.2</td><td class="num"><b>6.0</b></td><td class="num"><span class="pill down">-27%</span></td><td class="num">3.0</td></tr>
+<tr><td>도램마을20단지 (에듀파크)<br><span class="sm">2014 · 18笔</span></td><td class="num">7.7</td><td class="num"><b>5.8</b></td><td class="num"><span class="pill down">-25%</span></td><td class="num">2.5</td></tr>
+<tr><td>엘가도램마을12단지<br><span class="sm">2014 · 9笔</span></td><td class="num">—</td><td class="num"><b>5.8</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.7</td></tr>
+<tr><td>도램마을1단지 (웅진스타클래스)<br><span class="sm">2014 · 9笔</span></td><td class="num">7.7</td><td class="num"><b>5.6</b></td><td class="num"><span class="pill down">-27%</span></td><td class="num">2.6</td></tr>
+<tr><td>도램마을16단지 (모아미래도)<br><span class="sm">2015 · 12笔</span></td><td class="num">—</td><td class="num"><b>5.1</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.6</td></tr>
+<tr><td>도램마을17단지 (모아미래도)<br><span class="sm">2015 · 3笔</span></td><td class="num">—</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.5</td></tr>
+<tr><td>도램마을 19단지 (모아미래도)<br><span class="sm">2015 · 4笔</span></td><td class="num">—</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill flat">—</span></td><td class="num">2.3</td></tr>
+<tr><td>도램마을18단지 (모아미래도)<br><span class="sm">2015 · 3笔</span></td><td class="num">7.5</td><td class="num"><b>5.0</b></td><td class="num"><span class="pill down">-32%</span></td><td class="num">2.6</td></tr></table></div><ul class="b"><li>道潭洞 34 坪一般价 <b>5.9亿</b> · 比 2021 年 8.3亿 <b>-28%</b>（比新城平均 -18% 跌得多）</li><li>大多 <b>2014~2015 年入住（第 12 年）</b> → 「新房溢价」已经全部消失</li><li>全租率 <b>46%</b> · 26 年下半年全租 <b>+3.7%</b> / 买卖 -1.7%</li><li><span class="guess">推测</span> 紧挨政府大楼北侧，可能有通勤需求 — 2012~14 年第一次搬迁时的分区资料无法确认</li></ul></section><section><h2><span class="n">6</span>到 2027 年底的预测</h2><p class="cap"><b>新城 34 坪 · 与现在相比</b> · 以过去真实出现过的变动为依据</p><div class="tw"><table><tr><th></th><th>买卖</th><th>条件</th><th>依据（实测）</th></tr><tr><td><b>不好</b></td><td class="num"><b>-3%</b></td><td>再加息 2 次 · 恢复特供使需求集中到新房</td><td class="sm">加息前后 26 年 4~9 月 -2.3%</td></tr><tr><td><b>一般</b></td><td class="num"><b>+3%</b></td><td>延续现在走势 + 全租推高买卖</td><td class="sm">近 1 年 +0.3% · 全租 +5.6%</td></tr><tr><td><b>好</b></td><td class="num"><b>+8%</b></td><td>行政首都特别法通过 + 停止加息</td><td class="sm">25 年 4~6 月(大选·行政首都承诺)一个季度 +6%</td></tr></table></div><ul class="b"><li><b>全租：+5~10%</b> <span class="guess">推测</span> — 近 1 年 +5.6%，再加上「2027 年入住 0 套 + 公务员 3 千人」</li><li><b>像 2020 年那样暴涨(2019→2021 +82%)依据不足</b> — 当时基准利率 0.5%，现在 3.0% 且在上调</li><li>若恢复特供，公务员需求会流向<b>第 5-1 生活圈新房</b>，对旧房帮助较小</li></ul></section><section><h2><span class="n">7</span>我家（5 区 34 坪复式）</h2><p class="cap"><b>2028 年预估价</b> · 单位 亿 · 上次报告计算 × 上面的预测</p><div class="tw"><table><tr><th>世宗整体走势</th><th class=num>新房溢价消失</th><th class=num>溢价撑住</th></tr><tr><td><b>不好</b> (-3%)</td><td class="num"><b>6.0</b></td><td class="num">6.6</td></tr><tr class=hi><td><b>一般</b> (+3%)</td><td class="num"><b>6.4</b></td><td class="num">7.0</td></tr><tr><td><b>好</b> (+8%)</td><td class="num"><b>6.7</b></td><td class="num">7.3</td></tr></table></div><ul class="b"><li>上次报告：现在估值 <b>6.8亿</b> · 山蔚溢价 +23% 大部分是「因为是新房」</li><li>近期山蔚 34 坪成交：2 区 7.2亿(10月) · 7 区 6.5亿(10月) · 6 区 6.3亿(10月, 3楼)</li><li>可能性最高的格子：<b>一般 × 溢价消失 = 6.4亿</b> <span class="guess">推测</span></li></ul></section><section><h2><span class="n">8</span>什么时候卖（更新）</h2><div class="tl"><div class="ev up"><b>现在~27上</b><span class="t">卖出好时机</span><span class="r">仍是新房 · 全租上涨使想买的人增加</span></div><div class="ev flat"><b>27.3</b><span class="t">高速公路通车</span><span class="r">通勤方便，搬家需求可能减少</span></div><div class="ev flat"><b>27下</b><span class="t">运动员村租赁 2,300 户</span><span class="r">全租紧张部分缓解</span></div><div class="ev down"><b>27~28</b><span class="t">新房效应消失</span><span class="r">过去平均 -9%</span></div><div class="ev down"><b>30~32</b><span class="t">隔壁新房 1 万套</span><span class="r">最不利</span></div></div><div class="verdict" style="margin-top:12px">结论不变：<b>2027 年上半年</b>。公务员搬迁<b>先影响全租</b>，目前没有依据说明它大到能推高我家房价</div></section><div class="note"><b>局限</b><br>· 34 坪 = 专用 82~86㎡ · 已排除亲属间交易和取消交易 · 2026 年 = 1 月~11 月 10 日申报<br>· 全租数据混有续约(上限 5%)，看起来可能比新签全租涨得少<br>· 3 种预测是套用过去真实变动的估算 · 补习街、商铺空置未能测量<br>· 来源：国土交通部实际成交价 · 行政安全部第 2 次搬迁计划(26.10.13) · 国土部业务报告(26.1) · 韩国银行 · 韩国不动产院 · Herald经济·E-today·iNews24·Money Today·Good Morning 忠清·世宗之声·Bizwatch · <a href="v1.html">查看上次报告（第1版）</a></div></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-const D={"dec": [["나성", 52.1, 13.9, 19.5, 0.8, 10.8, 4.7], ["어진", 22.9, 6.6, 14.9, 0.8, -0.5, 6.6], ["새롬", 22.2, -0.4, 9.0, -0.2, 12.7, 8.6], ["보람", 11.2, 0.4, 4.2, -0.4, 6.8, 8.4], ["다정", 8.3, 4.2, 6.4, -0.2, -2.2, 7.3], ["해밀", 8.1, 10.2, -7.7, -1.2, 7.5, 5.6], ["산울", 7.5, 23.3, -13.8, 1.2, -0.1, 2.4], ["소담", 2.3, -0.2, -1.6, 0.0, 4.1, 8.5], ["반곡", 1.2, 6.3, -1.3, -0.4, -3.1, 6.7], ["도담", -0.3, -8.8, 7.1, 0.5, 1.6, 11.2], ["대평", -1.4, 4.0, 6.3, -0.3, -10.6, 7.3], ["집현", -6.9, 15.0, -12.5, 0.1, -7.6, 4.4], ["종촌", -14.1, -9.3, 1.5, 0.1, -6.8, 11.3], ["한솔", -17.0, -17.3, 6.8, 0.7, -6.7, 14.0], ["아름", -17.2, -9.8, -0.4, 0.5, -8.3, 11.5], ["고운", -22.5, -3.8, -19.5, -0.7, 0.9, 9.6]], "imp": {"2018": {"age": 14.2, "cen": 1.3, "river": 2.2, "floor": 2.4, "brt": 5.7}, "2019": {"age": 15.8, "cen": 3.1, "river": 1.9, "floor": 1.1, "brt": 5.0}, "2021": {"age": 11.6, "cen": 3.1, "river": 1.5, "floor": 1.1, "brt": 1.8}, "2023": {"age": 18.0, "cen": 8.1, "river": 2.5, "floor": 3.2, "brt": 2.5}, "recent": {"age": 16.0, "cen": 15.0, "river": 2.8, "floor": 2.1, "brt": 1.6}}, "r2": {"recent": 59, "2018": 58, "2019": 66, "2021": 43, "2023": 66}, "ag": {"0~1년": 0.0, "2~3년": -1.5569036542275372, "4~5년": -10.069148990433941, "6~7년": -10.678937865039273, "8~9년": -10.931065611553848, "10~11년": -14.04939191006177, "12~14년": -15.65309036109822}, "dr": {"고운": {"2015": 92, "2016": 92, "2017": 99, "2018": 84, "2019": 73, "2020": 74, "2021": 87, "2022": 84, "2023": 80, "2024": 78, "2025": 77, "2026": 78}, "종촌": {"2014": 97, "2015": 101, "2016": 108, "2017": 110, "2018": 104, "2019": 95, "2020": 95, "2021": 95, "2022": 87, "2023": 90, "2024": 92, "2025": 89, "2026": 92}, "도담": {"2015": 104, "2016": 112, "2017": 121, "2018": 117, "2019": 108, "2020": 107, "2021": 104, "2022": 104, "2023": 99, "2024": 99, "2025": 99, "2026": 98}, "아름": {"2015": 95, "2016": 98, "2017": 75, "2018": 88, "2019": 80, "2020": 81, "2021": 88, "2022": 88, "2023": 85, "2024": 83, "2025": 83, "2026": 84}, "어진": {"2014": 121, "2015": 130, "2016": 124, "2017": 139, "2018": 137, "2019": 131, "2020": 111, "2021": 108, "2023": 117, "2024": 129, "2025": 126, "2026": 126}, "한솔": {"2013": 100, "2014": 102, "2015": 100, "2016": 97, "2017": 95, "2018": 92, "2019": 86, "2020": 92, "2021": 91, "2022": 96, "2023": 89, "2024": 86, "2025": 85, "2026": 85}, "새롬": {"2018": 137, "2019": 128, "2020": 127, "2021": 115, "2022": 114, "2023": 118, "2024": 121, "2025": 120, "2026": 126}, "다정": {"2018": 125, "2019": 118, "2020": 117, "2021": 109, "2022": 107, "2023": 108, "2024": 108, "2025": 110, "2026": 110}, "나성": {"2023": 156, "2024": 149, "2025": 151, "2026": 152}, "보람": {"2018": 128, "2019": 120, "2020": 123, "2021": 114, "2022": 112, "2023": 111, "2024": 114, "2025": 116, "2026": 117}, "소담": {"2017": 118, "2018": 128, "2019": 113, "2020": 108, "2021": 104, "2022": 104, "2023": 102, "2024": 101, "2025": 102, "2026": 103}, "대평": {"2018": 129, "2019": 137, "2020": 130, "2021": 112, "2022": 101, "2023": 104, "2024": 105, "2025": 101, "2026": 97}, "반곡": {"2019": 107, "2020": 115, "2021": 106, "2022": 105, "2023": 104, "2024": 107, "2025": 102, "2026": 103}, "집현": {"2023": 103, "2024": 100, "2025": 96, "2026": 94}, "해밀": {"2023": 108, "2024": 108, "2025": 110, "2026": 112}, "산울": {"2025": 112, "2026": 111}}};
-const T={ko:{eok:'억',yr:'년',avg:'세종 평균',fac:['새집인가','중심가 거리','강 거리','몇 층','버스역 거리'],ag:['0~1년','2~3년','4~5년','6~7년','8~9년','10~11년','12~14년'],sp:['새집이라','위치 때문에','지금'],sc:['처음 산 값','지금','보통','버팀','좋음'],sup:['26.11','2027','2028','2029'],
-dn:{나성:'나성',어진:'어진',산울:'산울',해밀:'해밀',대평:'대평',고운:'고운'},unit:'가구',cnt:'건',imp:'영향 크기',ax:'세종 평균 = 100'},
-zh:{eok:'亿',yr:'年',avg:'世宗平均',fac:['是否新房','离市中心','离江边','楼层','离快速公交'],ag:['0~1年','2~3年','4~5年','6~7年','8~9年','10~11年','12~14年'],sp:['新房','位置','现在'],sc:['购入价','现在','一般','撑住','乐观'],sup:['26.11','2027','2028','2029'],
-dn:{나성:'罗城',어진:'於真',산울:'山蔚',해밀:'海密',대평:'大坪',고운:'高云'},unit:'户',cnt:'笔',imp:'影响大小',ax:'世宗平均 = 100'}};
-const P={yr:['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],pr:[2.94,2.94,3.21,3.28,3.83,4.2,5.6,7.71,6.16,5.79,5.7,5.92,6.05],
-by:['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'],ret:[79,60,48,41,39,4,-24,-2,3,7,3],
-imp:[16.0,15.0,2.8,2.1,1.6],ag:[0,-1.6,-10.1,-10.7,-10.9,-14.0,-15.7],sp:[23.3,-13.8,7.5],sc:[4.59,6.8,6.2,6.8,7.3],sup:[2191,2367,4110,4205],
-q:{ko:[['1~3월','25년'],'4~6','7~9','10~12',['1~3월','26년'],'4~6','7~9','10~'],zh:[['1~3月','25年'],'4~6','7~9','10~12',['1~3月','26年'],'4~6','7~9','10~']},qv:[1,9,7,22,23,27,12,12]};
+const P={"si": [100.0, 100.0, 100.5, 99.8, 99.0, 105.0, 106.1, 106.1, 107.2, 106.2, 104.7, 106.4], "ji": [100.0, 95.9, 95.0, 97.1, 96.4, 98.1, 102.6, 108.2, 109.3, 109.3, 110.4, 114.3]};
+const Q=['24.1~3','4~6','7~9','10~12','25.1~3','4~6','7~9','10~12','26.1~3','4~6','7~9','10~'];
+const T={ko:{s:'매매',j:'전세',d:['공무원 이전\n(2027)','나라 임대\n(27.8월~)','새 아파트 입주\n(2027)','새 아파트 입주\n(2028)'],u:['명','가구','가구','가구']},
+zh:{s:'买卖',j:'全租',d:['公务员搬迁\n(2027)','国家租赁房\n(27.8月~)','新房入住\n(2027)','新房入住\n(2028)'],u:['人','户','户','户']}};
 let L='ko',charts=[];const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 function base(){Chart.defaults.color=css('--sub');Chart.defaults.font.family='"IBM Plex Sans KR","PingFang SC","Microsoft YaHei",sans-serif';Chart.defaults.font.size=13;Chart.defaults.borderColor=css('--grid');Chart.defaults.maintainAspectRatio=false}
-const lab=(f,o={})=>({id:'lab',afterDatasetsDraw(c){const{ctx}=c;ctx.save();ctx.font='600 12.5px sans-serif';ctx.fillStyle=css('--fg');ctx.textAlign=o.h?'left':'center';ctx.textBaseline='middle';c.getDatasetMeta(0).data.forEach((b,i)=>{const v=c.data.datasets[0].data[i];if(o.skip&&o.skip(i))return;ctx.fillText(f(v),o.h?b.x+(v<0?-38:5):b.x,o.h?b.y:(v<0?b.y+11:b.y-9))});ctx.restore()}});
-function bar(id,labels,data,colors,opt={},f=v=>v){return new Chart(document.getElementById(id),{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:3}]},options:Object.assign({layout:{padding:{top:18,right:opt.indexAxis?40:4}},plugins:{legend:{display:false}},scales:opt.scales||{x:{grid:{display:false}}}},opt.o||{},opt.indexAxis?{indexAxis:'y'}:{}),plugins:[lab(f,{h:!!opt.indexAxis,skip:opt.skip})]})}
-function draw(){charts.forEach(c=>c.destroy());charts=[];base();const t=T[L],A=css('--accent'),G=css('--line'),U=css('--up'),D_=css('--down'),S=['--s1','--s2','--s3','--s4','--s5','--s6'].map(css);
- charts.push(new Chart(document.getElementById(L+'1'),{type:'line',data:{labels:P.yr,datasets:[{data:P.pr,borderColor:A,backgroundColor:A,borderWidth:3,pointRadius:P.pr.map((v,i)=>i===7||i===12?6:3)}]},options:{layout:{padding:{top:22}},plugins:{legend:{display:false}},scales:{y:{min:2,max:8.5,ticks:{callback:v=>v+t.eok}},x:{grid:{display:false}}}},plugins:[{id:'pk',afterDatasetsDraw(c){const{ctx}=c;ctx.save();ctx.font='700 13px sans-serif';ctx.fillStyle=css('--fg');ctx.textAlign='center';[7,12].forEach(i=>{const p=c.getDatasetMeta(0).data[i];ctx.fillText(P.pr[i]+t.eok,p.x-(i===12?14:0),p.y-12)});ctx.restore()}}]}));
- charts.push(bar(L+'2',P.by,P.ret,P.ret.map(v=>v>=0?U:D_),{scales:{y:{ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}},v=>(v>0?'+':'')+v));
- charts.push(bar(L+'3',t.fac,P.imp,P.imp.map((v,i)=>i<2?A:G),{indexAxis:true,scales:{x:{title:{display:true,text:t.imp}},y:{grid:{display:false}}}},v=>v));
- const pick=[['나성',S[1]],['어진',S[3]],['산울',A],['해밀',S[2]],['대평',S[4]],['고운',S[5]]],yrs=[];for(let y=2013;y<=2026;y++)yrs.push(String(y));
- charts.push(new Chart(document.getElementById(L+'4'),{type:'line',data:{labels:yrs,datasets:[{label:t.avg,data:yrs.map(()=>100),borderColor:css('--sub'),borderDash:[5,4],borderWidth:1.5,pointRadius:0},...pick.map(([d,c])=>({label:t.dn[d],data:yrs.map(y=>D.dr[d]&&D.dr[d][y]!=null?D.dr[d][y]:null),borderColor:c,backgroundColor:c,borderWidth:d==='산울'?4:2.2,pointRadius:d==='산울'?4:2,spanGaps:true}))]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:14,padding:10}}},scales:{y:{min:60,max:170,title:{display:true,text:t.ax}},x:{grid:{display:false}}}}}));
- charts.push(bar(L+'5',t.ag,P.ag,P.ag.map((v,i)=>i===2?D_:G),{scales:{y:{min:-18,max:2,ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}},skip:i=>i===0},v=>v+'%'));
- charts.push(bar(L+'6',t.sp,P.sp,[U,D_,A],{indexAxis:true,scales:{x:{min:-20,max:30,ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}},v=>(v>0?'+':'')+v+'%'));
- charts.push(bar(L+'7',t.sc,P.sc,[G,A,D_,S[5],U],{scales:{y:{min:0,max:8,ticks:{callback:v=>v+t.eok}},x:{grid:{display:false}}}},v=>v+t.eok));
- charts.push(bar(L+'8',t.sup,P.sup,P.sup.map((v,i)=>i===1?G:S[3]),{scales:{y:{ticks:{callback:v=>v.toLocaleString()}},x:{grid:{display:false}}}},v=>v.toLocaleString()));
- charts.push(bar(L+'9',P.q[L],P.qv,P.qv.map((v,i)=>i>=3&&i<=5?D_:G),{scales:{y:{ticks:{stepSize:5}},x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,font:{size:12}}}}},v=>v));
+function draw(){charts.forEach(c=>c.destroy());charts=[];base();const t=T[L],A=css('--accent'),U=css('--up'),Dn=css('--down'),G=css('--s6'),S3=css('--s3');
+ const dv=[2995,2300,0,1765];
+ charts.push(new Chart(document.getElementById(L+'2'),{type:'bar',data:{labels:t.d.map(x=>x.split('\n')),datasets:[{data:dv,backgroundColor:[U,S3,Dn,G],borderRadius:3,minBarLength:3}]},
+  options:{layout:{padding:{top:22}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw.toLocaleString()+t.u[c.dataIndex]}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v.toLocaleString()}},x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,font:{size:12.5}}}}},
+  plugins:[{id:'lb',afterDatasetsDraw(c){const x=c.ctx;x.save();x.font='700 13px sans-serif';x.fillStyle=css('--fg');x.textAlign='center';c.getDatasetMeta(0).data.forEach((b,i)=>x.fillText(dv[i].toLocaleString()+t.u[i],b.x,b.y-8));x.restore()}}]}));
+ charts.push(new Chart(document.getElementById(L+'3'),{type:'line',data:{labels:Q,datasets:[{label:t.j,data:P.ji,borderColor:U,backgroundColor:U,borderWidth:3,pointRadius:3},{label:t.s,data:P.si,borderColor:A,backgroundColor:A,borderWidth:3,pointRadius:3}]},
+  options:{layout:{padding:{top:10,right:46}},plugins:{legend:{position:'bottom',labels:{boxWidth:14}}},scales:{y:{min:90,max:118},x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,font:{size:11.5},callback:(v,i)=>i%2?'':Q[i]}}}},
+  plugins:[{id:'end',afterDatasetsDraw(c){const x=c.ctx;x.save();x.font='700 13px sans-serif';x.fillStyle=css('--fg');x.textAlign='left';c.data.datasets.forEach((d,k)=>{const m=c.getDatasetMeta(k).data;const p=m[m.length-1];x.fillText(d.data[d.data.length-1],p.x+5,p.y)});x.restore()}}]}));
 }
-function setL(l){L=l;document.querySelectorAll('[data-l]').forEach(e=>e.classList.toggle('on',e.dataset.l===l));bko.setAttribute('aria-pressed',l==='ko');bzh.setAttribute('aria-pressed',l==='zh');document.documentElement.lang=l==='ko'?'ko':'zh-CN';document.title=l==='ko'?'세종 집값 한눈에':'世宗房价一览';try{localStorage.setItem('sjL',l)}catch(e){}go()}
+function setL(l){L=l;document.querySelectorAll('[data-l]').forEach(e=>e.classList.toggle('on',e.dataset.l===l));bko.setAttribute('aria-pressed',l==='ko');bzh.setAttribute('aria-pressed',l==='zh');document.documentElement.lang=l==='ko'?'ko':'zh-CN';document.title=l==='ko'?'세종 집값 보고서 2차':'世宗房价报告 第2版';try{localStorage.setItem('sjL',l)}catch(e){}go()}
 bko.onclick=()=>setL('ko');bzh.onclick=()=>setL('zh');
 function go(){try{draw()}catch(e){console.error(e)}}
 let init='ko';try{init=new URLSearchParams(location.search).get('lang')||localStorage.getItem('sjL')||'ko'}catch(e){}
@@ -274,4 +159,4 @@ if(init!=='zh')init='ko';
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>setL(init));
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',go);
 new MutationObserver(go).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-</script>
+</script></body></html>

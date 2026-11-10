@@ -1,0 +1,277 @@
+<!doctype html><title>세종 집값 한눈에</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=Black+Han+Sans&display=swap">
+<style>
+/* 레이아웃: 760px 한 열, 그림이 주인공 · 글은 그림 밑 한두 줄 */
+:root{
+  --bg:#f5f7f8; --card:#ffffff; --fg:#14202a; --sub:#4a5864; --line:#d9e0e5;
+  --accent:#0b6e6a; --accent-bg:#e2f1ef; --up:#c8312b; --up-bg:#fbe9e7; --down:#1f5fb4; --down-bg:#e6eefa;
+  --grid:rgba(20,32,42,.08);
+  --s1:#0b6e6a; --s2:#c8312b; --s3:#d48a0b; --s4:#6b4fb3; --s5:#1f5fb4; --s6:#7a8a96;
+  --disp:"Black Han Sans","IBM Plex Sans KR",sans-serif; --body:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1519; --card:#172027; --fg:#e8eef2; --sub:#a9b6c0; --line:#2c3a44;
+  --accent:#4fc2b8; --accent-bg:#123230; --up:#ff7b6e; --up-bg:#3a1c1a; --down:#7fb0ff; --down-bg:#17263d;
+  --grid:rgba(232,238,242,.09);
+  --s1:#4fc2b8; --s2:#ff7b6e; --s3:#f2b544; --s4:#b39bff; --s5:#7fb0ff; --s6:#9aa8b3; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1519; --card:#172027; --fg:#e8eef2; --sub:#a9b6c0; --line:#2c3a44;
+  --accent:#4fc2b8; --accent-bg:#123230; --up:#ff7b6e; --up-bg:#3a1c1a; --down:#7fb0ff; --down-bg:#17263d;
+  --grid:rgba(232,238,242,.09);
+  --s1:#4fc2b8; --s2:#ff7b6e; --s3:#f2b544; --s4:#b39bff; --s5:#7fb0ff; --s6:#9aa8b3; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 60px;display:flex;flex-direction:column;gap:34px}
+h1{font-family:var(--disp);font-weight:400;font-size:34px;line-height:1.2;margin:0;letter-spacing:.5px;text-wrap:balance}
+h2{font-size:21px;margin:0;display:flex;gap:10px;align-items:baseline;text-wrap:balance}
+h2 .n{font-family:var(--disp);font-weight:400;color:var(--accent);font-size:24px}
+.meta{color:var(--sub);font-size:13.5px;margin-top:6px}
+.verdict{background:var(--accent-bg);border-left:6px solid var(--accent);padding:14px 16px;border-radius:4px;font-size:17px;font-weight:600}
+sec,section{display:flex;flex-direction:column;gap:12px}
+.cap{color:var(--sub);font-size:14px;margin:0}
+.chart{position:relative;height:320px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px}
+.chart.tall{height:380px}.chart.short{height:220px}
+ul.b{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.tl{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ev{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.ev b{font-size:13.5px;color:var(--sub);font-weight:600}
+.ev .t{font-weight:700;font-size:15px}
+.ev .r{font-size:14px;color:var(--sub)}
+.ev.up{border-left:5px solid var(--up)}.ev.down{border-left:5px solid var(--down)}.ev.flat{border-left:5px solid var(--s6)}
+.arrow{font-family:var(--disp);font-size:20px;line-height:1}
+.ev.up .arrow{color:var(--up)}.ev.down .arrow{color:var(--down)}.ev.flat .arrow{color:var(--s6)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums;background:var(--card)}
+th,td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+th{font-size:13.5px;color:var(--sub);font-weight:600}
+td.num{text-align:right;white-space:nowrap}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:13px;font-weight:700;white-space:nowrap}
+.pill.up{background:var(--up-bg);color:var(--fg);box-shadow:inset 3px 0 0 var(--up)}
+.pill.down{background:var(--down-bg);color:var(--fg);box-shadow:inset 3px 0 0 var(--down)}
+.pill.flat{background:var(--line);color:var(--fg)}
+.map{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px}
+.map svg{width:100%;height:auto;display:block;max-height:400px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two>div{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.two h3{margin:0 0 6px;font-size:16px}
+.two .u{border-top:5px solid var(--up)}.two .d{border-top:5px solid var(--down)}
+.note{font-size:13.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:12px}
+.note a{color:var(--accent)}
+.guess{font-size:12.5px;font-weight:700;border:1px solid var(--line);border-radius:4px;padding:0 5px;color:var(--sub);white-space:nowrap}
+@media (max-width:520px){h1{font-size:28px}.two{grid-template-columns:1fr}.chart{height:280px}.chart.tall{height:330px}}
+</style>
+<style>
+.lang{position:sticky;top:0;z-index:5;display:flex;gap:8px;justify-content:flex-end;padding:8px 0;background:var(--bg)}
+.lang button{font:inherit;font-size:15px;font-weight:700;padding:6px 16px;border-radius:20px;border:1.5px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.big div{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px;text-align:center}
+.big b{display:block;font-size:22px}.big span{font-size:13px;color:var(--sub)}
+.tw td:first-child{min-width:4.5em}
+[data-l]{display:none}[data-l].on{display:block}
+</style>
+<div class="wrap">
+<div class="lang"><button id="bko" aria-pressed="true">한국어</button><button id="bzh" aria-pressed="false">中文</button></div>
+
+<div data-l="ko" class="on">
+<header><h1>세종 집값 한눈에</h1>
+<div class="meta">국토부 실거래 3만 7,805건 직접 분석 · 2026.11</div></header>
+<div class="verdict">① 세종은 <b>오래 갖고 있으면 오르는 곳이 아님</b> — 2021년 최고가보다 아직 21% 쌈<br>
+② 집값을 가르는 1위 <b>새집이냐</b> · 2위 <b>중심가에 가깝냐</b><br>
+③ 산울동이 비싼 건 대부분 <b>새집이라서</b> → 4~5년 지나면 그 웃돈이 빠질 가능성</div>
+<div class="note" style="margin:12px 0"><b>먼저 알아둘 말</b><br>
+· <b>실거래</b> = 나라에 신고된, 실제로 팔린 값<br>
+· <b>분양가</b> = 새 아파트를 처음 살 때 낸 값<br>
+· <b>84㎡</b> = 흔히 말하는 「34평형」 · <b>억</b> = 1억 원<br>
+· <b>도심(중심가)</b> = 정부청사·호수공원·나성동 상가 일대<br>
+· <b>생활권</b> = 세종 신도시를 1~6번으로 나눈 큰 동네 묶음<br>
+· <b>BRT</b> = 세종 전용 급행버스</div>
+<div class="big"><div><b>-21%</b><span>2021 최고가 대비</span></div><div><b>83%</b><span>입주 4~6년 차에 내린 단지</span></div><div><b>6.8억</b><span>우리집 지금 추정</span></div></div>
+
+<section><h2><span class="n">1</span>세종 시세 흐름</h2>
+<p class="cap"><b>34평형 1채 값</b> · 그해 팔린 집들의 보통 값</p>
+<div class="chart"><canvas id="ko1"></canvas></div></section>
+
+<section><h2><span class="n">2</span>언제 산 사람이 이겼나</h2>
+<p class="cap"><b>그해 산 집이 지금 얼마나 올랐나</b> · 빨강=이익 파랑=손해</p>
+<div class="chart"><canvas id="ko2"></canvas></div>
+<ul class="b"><li>오래 들고 있어서가 아니라 <b>언제 샀느냐</b>로 갈림</li></ul></section>
+
+<section><h2><span class="n">3</span>무엇이 값을 정하나</h2>
+<p class="cap"><b>막대가 길수록 집값에 큰 영향</b></p>
+<div class="chart short"><canvas id="ko3"></canvas></div>
+<ul class="b"><li>집이 1년 낡을 때마다 <b>3.4% 싸짐</b> · 중심가에서 1km 멀어질 때마다 <b>7.5% 싸짐</b></li></ul></section>
+
+<section><h2><span class="n">4</span>싼 동네는 처음부터 쌌나?</h2>
+<p class="cap"><b>100 = 세종 보통 집값</b> · 100보다 위면 비싼 동네</p>
+<div class="chart tall"><canvas id="ko4"></canvas></div>
+<ul class="b"><li>대부분 <b>처음엔 비쌌다가 낡으며 내려옴</b> (대평 129 → 97)</li>
+<li>고운은 처음부터 낮음 · 나성·어진은 도심이라 버팀</li></ul></section>
+
+<section><h2><span class="n">5</span>같은 단지가 나이 들면</h2>
+<p class="cap"><b>새집일 때보다 몇 % 싸지나</b> · 세종 아파트 133곳 평균</p>
+<div class="chart short"><canvas id="ko5"></canvas></div>
+<ul class="b"><li><b>4~5년째에 한 번에 10% 빠짐</b>, 그 뒤는 천천히</li></ul></section>
+
+<section><h2><span class="n">6</span>산울동 웃돈은 어디서?</h2>
+<p class="cap"><b>세종 보통 집보다 몇 % 비싼가</b> · 이유별로 나눔</p>
+<div class="chart short"><canvas id="ko6"></canvas></div>
+<ul class="b"><li>새집이라 <b>+23%</b>, 중심가에서 멀어서 <b>-14%</b> → 지금 <b>+7.5%</b></li>
+<li>새집 효과가 사라지면 2028년쯤 <b>세종 보통 집값 수준</b>으로</li></ul></section>
+
+<section><h2><span class="n">7</span>우리집 (5단지 34평 복층)</h2>
+<p class="cap"><b>2028년 우리집 값 예상</b> · 세종 전체 집값이 그대로라면</p>
+<div class="chart short"><canvas id="ko7"></canvas></div>
+<div class="tw"><table>
+<tr><th>갈래</th><th>값</th><th>조건</th></tr>
+<tr><td>보통</td><td class="num"><b>6.2억</b></td><td>세종 아파트 10곳 중 8곳이 이랬음</td></tr>
+<tr><td>버팀</td><td class="num">6.8억</td><td>주변 상가·도로가 잘 생기면</td></tr>
+<tr><td>좋음</td><td class="num">7.3억</td><td>+ 정부기관이 더 이사 오면</td></tr>
+</table></div></section>
+
+<section><h2><span class="n">8</span>앞으로 새 아파트</h2>
+<p class="cap"><b>바로 옆 동네(5생활권)에 새로 짓는 집</b> · 세대 수</p>
+<div class="chart short"><canvas id="ko8"></canvas></div>
+<ul class="b"><li>신도시 안 <b>마지막 새 동네</b> · 사람들이 실제로 들어오는 건 <b>2030~32년</b></li>
+<li>그래도 끝은 아님: 신도시 밖에 <b>약 10만 채</b> 더 지을 계획(2040년까지)</li></ul></section>
+
+<section><h2><span class="n">9</span>산울 사람들은 안 파나?</h2>
+<p class="cap"><b>우리 단지에서 팔린 집 수</b> · 3개월마다</p>
+<div class="chart short"><canvas id="ko9"></canvas></div>
+<ul class="b"><li>입주 <b>2년</b>이 되자마자 많이 팔림 → 2년 넘게 갖고 있으면 <b>판 이익에 세금 0원</b>이라서</li><li>2년간 995세대 중 약 10%가 팔았음</li>
+<li>안 판 사람: 집이 이거 1채뿐 · 이미 2억 넘게 올라 급하지 않음 · 더 오를 거라 기대</li></ul></section>
+
+<section><h2><span class="n">10</span>언제 팔까</h2>
+<div class="tl">
+<div class="ev up"><b>지금~27.상</b><span class="t">팔기 좋은 때</span><span class="r">아직 새집이라 비싸게 받음</span></div>
+<div class="ev flat"><b>26.12~</b><span class="t">옆 단지 집 쏟아짐</span><span class="r">8단지도 2년이 됨</span></div>
+<div class="ev down"><b>27~28</b><span class="t">새집 효과 사라짐</span><span class="r">과거엔 평균 -9%</span></div>
+<div class="ev down"><b>30~32</b><span class="t">옆 동네 새집 1만 채</span><span class="r">가장 불리</span></div>
+</div>
+<div class="verdict" style="margin-top:12px">팔기 전 꼭: <b>2년 넘게 갖고 있었는지</b> · 경우에 따라 <b>2년 넘게 살았는지</b> → 세무사에게 확인</div></section>
+
+<div class="note"><b>한계</b><br>
+· 국토부 실거래 직접 분석 · 가족 간 거래·취소 거래 뺌 · 예측은 과거 평균을 적용한 추정<br>
+· 학원가·상가 공실·단지 규모는 측정 못 함 · 카페 글은 검색 요약만 확인<br>
+· 출처: 국토교통부 실거래가 · 행복청 공급계획 · 2040 세종도시기본계획 · 허송·정재호(2022) · 뉴시스·중도일보·세종의소리 등</div>
+</div>
+
+<div data-l="zh">
+<header><h1>世宗房价一览</h1>
+<div class="meta">直接分析国土部实际成交 37,805 笔 · 2026.11</div></header>
+<div class="verdict">① 世宗<b>不是放着就会涨</b>的城市 — 仍比 2021 年最高价便宜 21%<br>
+② 决定房价第一是<b>是不是新房</b> · 第二是<b>离市中心近不近</b><br>
+③ 山蔚洞贵主要因为<b>是新房</b> → 4~5 年后这部分溢价可能消失</div>
+<div class="note" style="margin:12px 0"><b>先了解几个词</b><br>
+· <b>实际成交</b> = 向政府申报的真实成交价<br>
+· <b>分售价</b> = 新房第一次购买时的价格<br>
+· <b>84㎡</b> = 韩国常见的「34 坪」户型 · <b>亿</b> = 1 亿韩元<br>
+· <b>市中心</b> = 政府大楼·湖水公园·罗城洞商圈一带<br>
+· <b>生活圈</b> = 世宗新城划分的 1~6 号大片区<br>
+· <b>BRT</b> = 世宗专用快速公交</div>
+<div class="big"><div><b>-21%</b><span>较 2021 最高价</span></div><div><b>83%</b><span>入住 4~6 年后下跌的小区</span></div><div><b>6.8亿</b><span>我家目前估值(韩元)</span></div></div>
+
+<section><h2><span class="n">1</span>世宗房价走势</h2>
+<p class="cap"><b>一套 34 坪房子的价格</b> · 当年成交的一般价格</p>
+<div class="chart"><canvas id="zh1"></canvas></div></section>
+
+<section><h2><span class="n">2</span>哪一年买的人赚了</h2>
+<p class="cap"><b>那一年买的房子现在涨了多少</b> · 红=赚 蓝=亏</p>
+<div class="chart"><canvas id="zh2"></canvas></div>
+<ul class="b"><li>输赢取决于<b>何时买入</b>，而不是持有多久</li></ul></section>
+
+<section><h2><span class="n">3</span>什么决定房价</h2>
+<p class="cap"><b>柱子越长，对房价影响越大</b></p>
+<div class="chart short"><canvas id="zh3"></canvas></div>
+<ul class="b"><li>房子每旧 1 年<b>便宜 3.4%</b> · 离市中心每远 1km <b>便宜 7.5%</b></li></ul></section>
+
+<section><h2><span class="n">4</span>便宜的区一开始就便宜吗?</h2>
+<p class="cap"><b>100 = 世宗一般房价</b> · 高于 100 就是贵的区</p>
+<div class="chart tall"><canvas id="zh4"></canvas></div>
+<ul class="b"><li>大多数是<b>新房时贵，变旧后下滑</b>（大坪 129 → 97）</li>
+<li>高云一开始就低 · 罗城、於真在市中心所以撑住</li></ul></section>
+
+<section><h2><span class="n">5</span>同一小区变旧后</h2>
+<p class="cap"><b>比新房时便宜了百分之几</b> · 世宗 133 个小区平均</p>
+<div class="chart short"><canvas id="zh5"></canvas></div>
+<ul class="b"><li><b>第 4~5 年一次性跌 10%</b>，之后缓慢下降</li></ul></section>
+
+<section><h2><span class="n">6</span>山蔚洞的溢价从哪来?</h2>
+<p class="cap"><b>比世宗一般房子贵百分之几</b> · 按原因拆分</p>
+<div class="chart short"><canvas id="zh6"></canvas></div>
+<ul class="b"><li>新房 <b>+23%</b>，离市中心远 <b>-14%</b> → 现在 <b>+7.5%</b></li>
+<li>新房效应消失后，2028 年左右回到<b>世宗一般房价水平</b></li></ul></section>
+
+<section><h2><span class="n">7</span>我家（5 区 34 坪复式）</h2>
+<p class="cap"><b>2028 年我家房价预估</b> · 假设世宗整体房价不变</p>
+<div class="chart short"><canvas id="zh7"></canvas></div>
+<div class="tw"><table>
+<tr><th>情景</th><th>价格</th><th>条件</th></tr>
+<tr><td>一般</td><td class="num"><b>6.2亿</b></td><td>世宗 10 个小区里有 8 个是这样</td></tr>
+<tr><td>撑住</td><td class="num">6.8亿</td><td>周边商铺·道路建好的话</td></tr>
+<tr><td>乐观</td><td class="num">7.3亿</td><td>+ 更多政府机关搬来</td></tr>
+</table></div></section>
+
+<section><h2><span class="n">8</span>未来新房供应</h2>
+<p class="cap"><b>隔壁新区（第 5 生活圈）新建住房</b> · 户数</p>
+<div class="chart short"><canvas id="zh8"></canvas></div>
+<ul class="b"><li>新城内<b>最后一个新区</b> · 真正入住集中在 <b>2030~32 年</b></li>
+<li>但不是终点：新城外还计划新增<b>约 10 万套</b>（2040 规划）</li></ul></section>
+
+<section><h2><span class="n">9</span>山蔚洞的人不卖吗?</h2>
+<p class="cap"><b>我们小区卖出的套数</b> · 每 3 个月</p>
+<div class="chart short"><canvas id="zh9"></canvas></div>
+<ul class="b"><li>入住满 <b>2 年</b>后马上大量卖出 → 持有满 2 年<b>卖房收益免税</b></li><li>两年内 995 户中约 10% 已卖</li>
+<li>没卖的人：只有这一套房 · 已涨 2 亿以上不着急 · 期待继续上涨</li></ul></section>
+
+<section><h2><span class="n">10</span>什么时候卖</h2>
+<div class="tl">
+<div class="ev up"><b>现在~27上</b><span class="t">卖出好时机</span><span class="r">还是新房，能卖高价</span></div>
+<div class="ev flat"><b>26.12~</b><span class="t">隔壁小区大量挂牌</span><span class="r">8 区也满 2 年</span></div>
+<div class="ev down"><b>27~28</b><span class="t">新房效应消失</span><span class="r">过去平均 -9%</span></div>
+<div class="ev down"><b>30~32</b><span class="t">隔壁新房 1 万户</span><span class="r">最不利</span></div>
+</div>
+<div class="verdict" style="margin-top:12px">卖之前必须确认：<b>是否持有满 2 年</b> · 有些情况还要<b>住满 2 年</b> → 请咨询税务师</div></section>
+
+<div class="note"><b>局限</b><br>
+· 直接分析国土部实际成交 · 已排除亲属间交易和取消交易 · 预测为套用过去平均值的估算<br>
+· 未能测量补习街、商铺空置、小区规模 · 网络社区仅查看了搜索摘要<br>
+· 来源：韩国国土交通部实际成交价 · 行政中心复合城市建设厅供应计划 · 2040 世宗城市基本规划 · 许松·郑在浩(2022) · Newsis、中都日报、世宗之声等</div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const D={"dec": [["나성", 52.1, 13.9, 19.5, 0.8, 10.8, 4.7], ["어진", 22.9, 6.6, 14.9, 0.8, -0.5, 6.6], ["새롬", 22.2, -0.4, 9.0, -0.2, 12.7, 8.6], ["보람", 11.2, 0.4, 4.2, -0.4, 6.8, 8.4], ["다정", 8.3, 4.2, 6.4, -0.2, -2.2, 7.3], ["해밀", 8.1, 10.2, -7.7, -1.2, 7.5, 5.6], ["산울", 7.5, 23.3, -13.8, 1.2, -0.1, 2.4], ["소담", 2.3, -0.2, -1.6, 0.0, 4.1, 8.5], ["반곡", 1.2, 6.3, -1.3, -0.4, -3.1, 6.7], ["도담", -0.3, -8.8, 7.1, 0.5, 1.6, 11.2], ["대평", -1.4, 4.0, 6.3, -0.3, -10.6, 7.3], ["집현", -6.9, 15.0, -12.5, 0.1, -7.6, 4.4], ["종촌", -14.1, -9.3, 1.5, 0.1, -6.8, 11.3], ["한솔", -17.0, -17.3, 6.8, 0.7, -6.7, 14.0], ["아름", -17.2, -9.8, -0.4, 0.5, -8.3, 11.5], ["고운", -22.5, -3.8, -19.5, -0.7, 0.9, 9.6]], "imp": {"2018": {"age": 14.2, "cen": 1.3, "river": 2.2, "floor": 2.4, "brt": 5.7}, "2019": {"age": 15.8, "cen": 3.1, "river": 1.9, "floor": 1.1, "brt": 5.0}, "2021": {"age": 11.6, "cen": 3.1, "river": 1.5, "floor": 1.1, "brt": 1.8}, "2023": {"age": 18.0, "cen": 8.1, "river": 2.5, "floor": 3.2, "brt": 2.5}, "recent": {"age": 16.0, "cen": 15.0, "river": 2.8, "floor": 2.1, "brt": 1.6}}, "r2": {"recent": 59, "2018": 58, "2019": 66, "2021": 43, "2023": 66}, "ag": {"0~1년": 0.0, "2~3년": -1.5569036542275372, "4~5년": -10.069148990433941, "6~7년": -10.678937865039273, "8~9년": -10.931065611553848, "10~11년": -14.04939191006177, "12~14년": -15.65309036109822}, "dr": {"고운": {"2015": 92, "2016": 92, "2017": 99, "2018": 84, "2019": 73, "2020": 74, "2021": 87, "2022": 84, "2023": 80, "2024": 78, "2025": 77, "2026": 78}, "종촌": {"2014": 97, "2015": 101, "2016": 108, "2017": 110, "2018": 104, "2019": 95, "2020": 95, "2021": 95, "2022": 87, "2023": 90, "2024": 92, "2025": 89, "2026": 92}, "도담": {"2015": 104, "2016": 112, "2017": 121, "2018": 117, "2019": 108, "2020": 107, "2021": 104, "2022": 104, "2023": 99, "2024": 99, "2025": 99, "2026": 98}, "아름": {"2015": 95, "2016": 98, "2017": 75, "2018": 88, "2019": 80, "2020": 81, "2021": 88, "2022": 88, "2023": 85, "2024": 83, "2025": 83, "2026": 84}, "어진": {"2014": 121, "2015": 130, "2016": 124, "2017": 139, "2018": 137, "2019": 131, "2020": 111, "2021": 108, "2023": 117, "2024": 129, "2025": 126, "2026": 126}, "한솔": {"2013": 100, "2014": 102, "2015": 100, "2016": 97, "2017": 95, "2018": 92, "2019": 86, "2020": 92, "2021": 91, "2022": 96, "2023": 89, "2024": 86, "2025": 85, "2026": 85}, "새롬": {"2018": 137, "2019": 128, "2020": 127, "2021": 115, "2022": 114, "2023": 118, "2024": 121, "2025": 120, "2026": 126}, "다정": {"2018": 125, "2019": 118, "2020": 117, "2021": 109, "2022": 107, "2023": 108, "2024": 108, "2025": 110, "2026": 110}, "나성": {"2023": 156, "2024": 149, "2025": 151, "2026": 152}, "보람": {"2018": 128, "2019": 120, "2020": 123, "2021": 114, "2022": 112, "2023": 111, "2024": 114, "2025": 116, "2026": 117}, "소담": {"2017": 118, "2018": 128, "2019": 113, "2020": 108, "2021": 104, "2022": 104, "2023": 102, "2024": 101, "2025": 102, "2026": 103}, "대평": {"2018": 129, "2019": 137, "2020": 130, "2021": 112, "2022": 101, "2023": 104, "2024": 105, "2025": 101, "2026": 97}, "반곡": {"2019": 107, "2020": 115, "2021": 106, "2022": 105, "2023": 104, "2024": 107, "2025": 102, "2026": 103}, "집현": {"2023": 103, "2024": 100, "2025": 96, "2026": 94}, "해밀": {"2023": 108, "2024": 108, "2025": 110, "2026": 112}, "산울": {"2025": 112, "2026": 111}}};
+const T={ko:{eok:'억',yr:'년',avg:'세종 평균',fac:['새집인가','중심가 거리','강 거리','몇 층','버스역 거리'],ag:['0~1년','2~3년','4~5년','6~7년','8~9년','10~11년','12~14년'],sp:['새집이라','위치 때문에','지금'],sc:['처음 산 값','지금','보통','버팀','좋음'],sup:['26.11','2027','2028','2029'],
+dn:{나성:'나성',어진:'어진',산울:'산울',해밀:'해밀',대평:'대평',고운:'고운'},unit:'가구',cnt:'건',imp:'영향 크기',ax:'세종 평균 = 100'},
+zh:{eok:'亿',yr:'年',avg:'世宗平均',fac:['是否新房','离市中心','离江边','楼层','离快速公交'],ag:['0~1年','2~3年','4~5年','6~7年','8~9年','10~11年','12~14年'],sp:['新房','位置','现在'],sc:['购入价','现在','一般','撑住','乐观'],sup:['26.11','2027','2028','2029'],
+dn:{나성:'罗城',어진:'於真',산울:'山蔚',해밀:'海密',대평:'大坪',고운:'高云'},unit:'户',cnt:'笔',imp:'影响大小',ax:'世宗平均 = 100'}};
+const P={yr:['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],pr:[2.94,2.94,3.21,3.28,3.83,4.2,5.6,7.71,6.16,5.79,5.7,5.92,6.05],
+by:['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'],ret:[79,60,48,41,39,4,-24,-2,3,7,3],
+imp:[16.0,15.0,2.8,2.1,1.6],ag:[0,-1.6,-10.1,-10.7,-10.9,-14.0,-15.7],sp:[23.3,-13.8,7.5],sc:[4.59,6.8,6.2,6.8,7.3],sup:[2191,2367,4110,4205],
+q:{ko:[['1~3월','25년'],'4~6','7~9','10~12',['1~3월','26년'],'4~6','7~9','10~'],zh:[['1~3月','25年'],'4~6','7~9','10~12',['1~3月','26年'],'4~6','7~9','10~']},qv:[1,9,7,22,23,27,12,12]};
+let L='ko',charts=[];const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function base(){Chart.defaults.color=css('--sub');Chart.defaults.font.family='"IBM Plex Sans KR","PingFang SC","Microsoft YaHei",sans-serif';Chart.defaults.font.size=13;Chart.defaults.borderColor=css('--grid');Chart.defaults.maintainAspectRatio=false}
+const lab=(f,o={})=>({id:'lab',afterDatasetsDraw(c){const{ctx}=c;ctx.save();ctx.font='600 12.5px sans-serif';ctx.fillStyle=css('--fg');ctx.textAlign=o.h?'left':'center';ctx.textBaseline='middle';c.getDatasetMeta(0).data.forEach((b,i)=>{const v=c.data.datasets[0].data[i];if(o.skip&&o.skip(i))return;ctx.fillText(f(v),o.h?b.x+(v<0?-38:5):b.x,o.h?b.y:(v<0?b.y+11:b.y-9))});ctx.restore()}});
+function bar(id,labels,data,colors,opt={},f=v=>v){return new Chart(document.getElementById(id),{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:3}]},options:Object.assign({layout:{padding:{top:18,right:opt.indexAxis?40:4}},plugins:{legend:{display:false}},scales:opt.scales||{x:{grid:{display:false}}}},opt.o||{},opt.indexAxis?{indexAxis:'y'}:{}),plugins:[lab(f,{h:!!opt.indexAxis,skip:opt.skip})]})}
+function draw(){charts.forEach(c=>c.destroy());charts=[];base();const t=T[L],A=css('--accent'),G=css('--line'),U=css('--up'),D_=css('--down'),S=['--s1','--s2','--s3','--s4','--s5','--s6'].map(css);
+ charts.push(new Chart(document.getElementById(L+'1'),{type:'line',data:{labels:P.yr,datasets:[{data:P.pr,borderColor:A,backgroundColor:A,borderWidth:3,pointRadius:P.pr.map((v,i)=>i===7||i===12?6:3)}]},options:{layout:{padding:{top:22}},plugins:{legend:{display:false}},scales:{y:{min:2,max:8.5,ticks:{callback:v=>v+t.eok}},x:{grid:{display:false}}}},plugins:[{id:'pk',afterDatasetsDraw(c){const{ctx}=c;ctx.save();ctx.font='700 13px sans-serif';ctx.fillStyle=css('--fg');ctx.textAlign='center';[7,12].forEach(i=>{const p=c.getDatasetMeta(0).data[i];ctx.fillText(P.pr[i]+t.eok,p.x-(i===12?14:0),p.y-12)});ctx.restore()}}]}));
+ charts.push(bar(L+'2',P.by,P.ret,P.ret.map(v=>v>=0?U:D_),{scales:{y:{ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}},v=>(v>0?'+':'')+v));
+ charts.push(bar(L+'3',t.fac,P.imp,P.imp.map((v,i)=>i<2?A:G),{indexAxis:true,scales:{x:{title:{display:true,text:t.imp}},y:{grid:{display:false}}}},v=>v));
+ const pick=[['나성',S[1]],['어진',S[3]],['산울',A],['해밀',S[2]],['대평',S[4]],['고운',S[5]]],yrs=[];for(let y=2013;y<=2026;y++)yrs.push(String(y));
+ charts.push(new Chart(document.getElementById(L+'4'),{type:'line',data:{labels:yrs,datasets:[{label:t.avg,data:yrs.map(()=>100),borderColor:css('--sub'),borderDash:[5,4],borderWidth:1.5,pointRadius:0},...pick.map(([d,c])=>({label:t.dn[d],data:yrs.map(y=>D.dr[d]&&D.dr[d][y]!=null?D.dr[d][y]:null),borderColor:c,backgroundColor:c,borderWidth:d==='산울'?4:2.2,pointRadius:d==='산울'?4:2,spanGaps:true}))]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:14,padding:10}}},scales:{y:{min:60,max:170,title:{display:true,text:t.ax}},x:{grid:{display:false}}}}}));
+ charts.push(bar(L+'5',t.ag,P.ag,P.ag.map((v,i)=>i===2?D_:G),{scales:{y:{min:-18,max:2,ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}},skip:i=>i===0},v=>v+'%'));
+ charts.push(bar(L+'6',t.sp,P.sp,[U,D_,A],{indexAxis:true,scales:{x:{min:-20,max:30,ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}},v=>(v>0?'+':'')+v+'%'));
+ charts.push(bar(L+'7',t.sc,P.sc,[G,A,D_,S[5],U],{scales:{y:{min:0,max:8,ticks:{callback:v=>v+t.eok}},x:{grid:{display:false}}}},v=>v+t.eok));
+ charts.push(bar(L+'8',t.sup,P.sup,P.sup.map((v,i)=>i===1?G:S[3]),{scales:{y:{ticks:{callback:v=>v.toLocaleString()}},x:{grid:{display:false}}}},v=>v.toLocaleString()));
+ charts.push(bar(L+'9',P.q[L],P.qv,P.qv.map((v,i)=>i>=3&&i<=5?D_:G),{scales:{y:{ticks:{stepSize:5}},x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,font:{size:12}}}}},v=>v));
+}
+function setL(l){L=l;document.querySelectorAll('[data-l]').forEach(e=>e.classList.toggle('on',e.dataset.l===l));bko.setAttribute('aria-pressed',l==='ko');bzh.setAttribute('aria-pressed',l==='zh');document.documentElement.lang=l==='ko'?'ko':'zh-CN';document.title=l==='ko'?'세종 집값 한눈에':'世宗房价一览';try{localStorage.setItem('sjL',l)}catch(e){}go()}
+bko.onclick=()=>setL('ko');bzh.onclick=()=>setL('zh');
+function go(){try{draw()}catch(e){console.error(e)}}
+let init='ko';try{init=new URLSearchParams(location.search).get('lang')||localStorage.getItem('sjL')||'ko'}catch(e){}
+if(init!=='zh')init='ko';
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>setL(init));
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',go);
+new MutationObserver(go).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+</script>
